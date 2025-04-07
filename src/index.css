@@ -205,7 +205,15 @@ body {
   * {
     @apply border-border outline-ring/50;
   }
+  #root {
+    @apply flex flex-col justify-between;
+  }
   body {
     @apply bg-background text-foreground;
+  }
+  html,
+  body,
+  #root {
+    @apply h-full;
   }
 }

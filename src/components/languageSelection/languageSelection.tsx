@@ -8,7 +8,8 @@ import { LanguageCard } from "./components/languageCard";
 import { useHandleStartGame } from "./utils/startGame";
 
 export function LanguageSelectionContainer() {
-  const { setDifficulty, setGameMode } = useGameSettingsStore();
+  const { difficulty, gameMode, setDifficulty, setGameMode } =
+    useGameSettingsStore();
   const { handleStartGame, error } = useHandleStartGame();
   const allLanguages = useStore((state) => state.allLanguages);
 
@@ -16,11 +17,13 @@ export function LanguageSelectionContainer() {
     <div className="flex flex-col items-center gap-5">
       <div className="flex gap-10">
         <Selection
+          value={gameMode}
           onValueChange={setGameMode}
           selectValue="Mode"
           data={data.gameModes}
         />
         <Selection
+          value={difficulty}
           onValueChange={setDifficulty}
           selectValue="Difficulty"
           data={data.difficulties}

@@ -7,6 +7,10 @@ import { shuffleArray } from "@/utils/shuffleArray";
 import { Terminal } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { useKeyboard } from "./utils/useKeyboard";
+import { CodeSnippetDisplay } from "./utils/codeDisplay";
+import { getSnippetsSelected } from "./utils/getSnippetsSelected";
+import { ScoringBoard } from "@/components/scoringBoard/scoringBoard";
 
 export function Game() {
   const {
@@ -18,72 +22,27 @@ export function Game() {
     isFinish,
     goodAnswers,
     setSnippets,
-    setSnippetIndex,
-    setUserInput,
-    setError,
-    setIsStarted,
-    setIsFinish,
     setGoodAnswers,
     resetGame,
+    nextSnippet,
   } = useGameStore();
   const { difficulty, gameMode, langChecked } = useGameSettingsStore();
-  const navigate = useNavigate();
-
-  const dummyRef = useRef<HTMLDivElement>(null);
   const allSnippets = useStore((state) => state.allSnippets);
 
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (!snippets[snippetIndex]) return;
-      setIsStarted(true);
+  const navigate = useNavigate();
+  const dummyRef = useRef<HTMLDivElement>(null);
+  const currentSnippet = snippets[snippetIndex];
 
-      const currentSnippet = snippets[snippetIndex].code;
-      const expectedChar = currentSnippet[userInput.length];
-
-      if (userInput.length >= currentSnippet.length - 1) {
-        e.preventDefault();
-        setIsFinish(true);
-        return;
-      }
-
-      if (e.key === "Enter") {
-        setError(false);
-        setUserInput(userInput + "\n");
-      } else if (e.key === "Backspace") {
-        setError(false);
-        setUserInput(userInput.slice(0, -1));
-      } else if (expectedChar === "\n") {
-        setError(true);
-        e.preventDefault();
-      } else if (e.key === "Tab") {
-        e.preventDefault();
-        setUserInput(userInput + "    ");
-      } else if (e.key.length === 1) {
-        setUserInput(userInput + e.key);
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [
-    userInput,
-    snippets,
-    snippetIndex,
-    setIsStarted,
-    setIsFinish,
-    setUserInput,
-    setError,
-  ]);
+  useKeyboard();
 
   useEffect(() => {
-    if (!allSnippets.length || !difficulty || !gameMode || !langChecked) {
+    if (!difficulty || !gameMode || !langChecked) {
       navigate("/");
     } else {
-      const snippetsSelected = allSnippets.filter((snippet) => {
-        return (
-          snippet.difficulty === difficulty &&
-          langChecked.some((lang) => lang === snippet.language)
-        );
+      const snippetsSelected = getSnippetsSelected({
+        allSnippets,
+        langChecked,
+        difficulty,
       });
       const shuffledSnippets = shuffleArray(snippetsSelected);
       setSnippets(shuffledSnippets);
@@ -97,8 +56,10 @@ export function Game() {
     let count = 0;
 
     for (let i = 0; i < userInput.length; i++) {
-      if (userInput[i] === currentSnippet[i]) {
-        count++;
+      if (currentSnippet[i] !== "\n" && currentSnippet[i] !== " ") {
+        if (userInput[i] === currentSnippet[i]) {
+          count++;
+        }
       }
     }
     setGoodAnswers(count);
@@ -112,29 +73,12 @@ export function Game() {
         Code {snippets[snippetIndex]?.language}
       </h2>
 
-      <pre>
-        <code className="whitespace-pre-wrap break-words font-mono text-base">
-          {snippets[snippetIndex]?.code.split("").map((char, i) => {
-            const typedChar = userInput[i];
-            const isCorrect = typedChar === char;
-
-            let className = "";
-            if (typedChar == null) {
-              className = "text-foreground bg-chart-3/30 rounded-full";
-            } else if (isCorrect) {
-              className = "text-green-400";
-            } else {
-              className = "text-red-500 underline";
-            }
-
-            return (
-              <span key={i} className={className}>
-                {char}
-              </span>
-            );
-          })}
-        </code>
-      </pre>
+      {currentSnippet && (
+        <CodeSnippetDisplay
+          snippet={snippets[snippetIndex]?.code}
+          userInput={userInput}
+        />
+      )}
       {error && (
         <Alert className="w-fit bg-destructive/70">
           <Terminal className="h-4 w-4" />
@@ -158,14 +102,13 @@ export function Game() {
         <Button
           children="Next"
           onClick={() => {
-            setSnippetIndex((snippetIndex + 1) % snippets.length);
-            setUserInput("");
-            setGoodAnswers(0);
-            setIsFinish(false);
-            setError(false);
+            nextSnippet();
             dummyRef.current?.focus();
           }}
         />
+      </div>
+      <div className="w-10/12">
+        <ScoringBoard />
       </div>
     </div>
   );

@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/tooltip";
 
 type SelectionProps = {
+  value: string;
   onValueChange: (e: string) => void;
   selectValue: string;
   data: {
@@ -23,12 +24,13 @@ type SelectionProps = {
 };
 
 export function Selection({
+  value,
   onValueChange,
   selectValue,
   data,
 }: SelectionProps) {
   return (
-    <Select onValueChange={onValueChange}>
+    <Select onValueChange={onValueChange} value={value}>
       <SelectTrigger>
         <SelectValue placeholder={selectValue} />
       </SelectTrigger>
