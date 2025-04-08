@@ -7,6 +7,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useGameSettingsStore } from "@/store/gameSettingsStore";
 import { useEffect, useState } from "react";
 
 type Scores = {
@@ -16,28 +17,29 @@ type Scores = {
   time: string;
   realAccuracy: number;
   length: number;
+  error?: number;
+  difficulty?: string;
 };
 
 export function ScoringBoard() {
   const [scores, setScores] = useState<Scores[]>([]);
+  const { gameMode } = useGameSettingsStore();
 
   useEffect(() => {
-    const savedScores = JSON.parse(localStorage.getItem("cpmResults") || "[]");
-    setScores(savedScores);
-
     const handleScoreUpdated = () => {
       const updatedScores = JSON.parse(
-        localStorage.getItem("cpmResults") || "[]"
+        localStorage.getItem(`${gameMode}Results`) || "[]"
       );
       setScores(updatedScores);
     };
 
+    handleScoreUpdated();
     window.addEventListener("scoreUpdated", handleScoreUpdated);
 
     return () => {
       window.removeEventListener("scoreUpdated", handleScoreUpdated);
     };
-  }, []);
+  }, [gameMode]);
 
   return (
     <Table className="w-full">
@@ -45,7 +47,9 @@ export function ScoringBoard() {
       <TableHeader>
         <TableRow>
           <TableHead className="font-bold">Language</TableHead>
-          <TableHead className="font-bold text-center">Length</TableHead>
+          {gameMode !== "timeAttack" && (
+            <TableHead className="font-bold text-center">Length</TableHead>
+          )}
           <TableHead className="font-bold text-center">Date</TableHead>
           <TableHead className="font-bold text-center">CPM</TableHead>
           <TableHead className="font-bold text-center">Real Accuracy</TableHead>
@@ -56,7 +60,9 @@ export function ScoringBoard() {
         {scores.map(({ cpm, date, snippet, time, realAccuracy, length }) => (
           <TableRow key={date.toString()}>
             <TableCell className="text-left">{snippet}</TableCell>
-            <TableCell className="text-center">{length}</TableCell>
+            {gameMode !== "timeAttack" && (
+              <TableCell className="text-center">{length}</TableCell>
+            )}
             <TableCell className="text-center">{date}</TableCell>
             <TableCell className="text-center">{cpm}</TableCell>
             <TableCell className="text-center">{`${realAccuracy}%`}</TableCell>

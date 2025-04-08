@@ -1,9 +1,12 @@
 import { useEffect, useCallback, useState } from "react";
 import { useGameStore } from "@/store/gameStore";
 import { format } from "date-fns";
+import { useGameSettingsStore } from "@/store/gameSettingsStore";
 
 export const useKeyboard = () => {
   const {
+    isStarted,
+    timeLeft,
     setAccuracy,
     cpm,
     badAnswers,
@@ -20,13 +23,16 @@ export const useKeyboard = () => {
     setFormattedTime,
     setCpm,
     setRealAccuracy,
+    goToNextSnippet,
   } = useGameStore();
 
+  const { gameMode, difficulty } = useGameSettingsStore();
   const [startTime, setStartTime] = useState<number | null>(null);
   const [endTime, setEndTime] = useState<number | null>(null);
 
   useEffect(() => {
     if (isFinish) {
+      console.log("isFinish");
       setStartTime(null);
       setEndTime(null);
     }
@@ -65,12 +71,24 @@ export const useKeyboard = () => {
 
       setUserInput(newInput);
 
+      if (
+        gameMode === "timeAttack" &&
+        newInput.length >= currentSnippet.length
+      ) {
+        goToNextSnippet();
+      }
+
+      if (timeLeft !== null && timeLeft > 0) {
+        return;
+      }
+
       if (newInput.length >= currentSnippet.length) {
         setEndTime(Date.now());
         window.removeEventListener("keydown", handleKeyDown);
         setIsFinish(true);
       }
     },
+
     [
       snippets,
       snippetIndex,
@@ -81,6 +99,9 @@ export const useKeyboard = () => {
       setUserInput,
       setIsFinish,
       startTime,
+      gameMode,
+      timeLeft,
+      goToNextSnippet,
     ]
   );
 
@@ -108,6 +129,7 @@ export const useKeyboard = () => {
           : 0
       );
       setRealAccuracy(realAccuracy);
+
       if (userCpm === 0) return;
 
       const newResult = {
@@ -117,17 +139,24 @@ export const useKeyboard = () => {
         cpm: userCpm,
         realAccuracy: realAccuracy,
         time: formatted,
+        ...(gameMode === "survival" && {
+          error: badAnswers,
+          difficulty: difficulty,
+        }),
       };
 
       const savedResults = JSON.parse(
-        localStorage.getItem("cpmResults") || "[]"
+        localStorage.getItem(`${gameMode}Results`) || "[]"
       );
 
       const updatedResults = [...savedResults, newResult]
         .sort((a, b) => b.cpm - a.cpm)
         .slice(0, 10);
 
-      localStorage.setItem("cpmResults", JSON.stringify(updatedResults));
+      localStorage.setItem(
+        `${gameMode}Results`,
+        JSON.stringify(updatedResults)
+      );
       window.dispatchEvent(new Event("scoreUpdated"));
     }
   }, [
@@ -143,6 +172,8 @@ export const useKeyboard = () => {
     setAccuracy,
     badAnswers,
     setRealAccuracy,
+    difficulty,
+    gameMode,
   ]);
 
   useEffect(() => {
@@ -152,4 +183,21 @@ export const useKeyboard = () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [handleKeyDown, isFinish]);
+
+  useEffect(() => {
+    if (gameMode === "timeAttack") {
+      if (isStarted && !isFinish && timeLeft === 0) {
+        setEndTime(Date.now() || startTime);
+        setIsFinish(true);
+      }
+    }
+  }, [
+    timeLeft,
+    isStarted,
+    isFinish,
+    setIsFinish,
+    setEndTime,
+    startTime,
+    gameMode,
+  ]);
 };
