@@ -4,7 +4,9 @@ import { format } from "date-fns";
 
 export const useKeyboard = () => {
   const {
+    setAccuracy,
     cpm,
+    badAnswers,
     goodAnswers,
     snippets,
     snippetIndex,
@@ -17,6 +19,7 @@ export const useKeyboard = () => {
     setTotalTime,
     setFormattedTime,
     setCpm,
+    setRealAccuracy,
   } = useGameStore();
 
   const [startTime, setStartTime] = useState<number | null>(null);
@@ -50,6 +53,9 @@ export const useKeyboard = () => {
         setError(true);
         e.preventDefault();
         return;
+      } else if (e.key === " ") {
+        e.preventDefault();
+        newInput += " ";
       } else if (e.key === "Tab") {
         e.preventDefault();
         newInput += "    ";
@@ -88,15 +94,28 @@ export const useKeyboard = () => {
       const formatted = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
       setFormattedTime(formatted);
 
-      const userCpm = Math.floor((goodAnswers / totalTimeInSeconds) * 60);
+      const userCpm = Math.floor(((goodAnswers + 1) / totalTimeInSeconds) * 60);
       setCpm(userCpm);
 
+      const totalLength = snippets[snippetIndex]?.code.length;
+      const accuracy = Math.ceil(
+        totalLength > 0 ? ((goodAnswers + 1) / totalLength) * 100 : 0
+      );
+      setAccuracy(accuracy);
+      const realAccuracy = Math.ceil(
+        totalLength > 0
+          ? ((goodAnswers + 1 - badAnswers) / totalLength) * 100
+          : 0
+      );
+      setRealAccuracy(realAccuracy);
       if (userCpm === 0) return;
 
       const newResult = {
         snippet: snippets[snippetIndex]?.language,
+        length: snippets[snippetIndex]?.code.length,
         date: format(new Date(), "EEEE d MMMM yyyy, HH:mm:ss"),
         cpm: userCpm,
+        realAccuracy: realAccuracy,
         time: formatted,
       };
 
@@ -121,6 +140,9 @@ export const useKeyboard = () => {
     goodAnswers,
     snippetIndex,
     snippets,
+    setAccuracy,
+    badAnswers,
+    setRealAccuracy,
   ]);
 
   useEffect(() => {

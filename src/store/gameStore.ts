@@ -4,6 +4,8 @@ import { devtools } from "zustand/middleware";
 import { CodeExample } from "./dataStore";
 
 interface GameStore {
+  realAccuracy: number;
+  accuracy: number;
   cpm: number;
   formatedTime: string;
   totalTime: number;
@@ -14,6 +16,10 @@ interface GameStore {
   isStarted: boolean;
   isFinish: boolean;
   goodAnswers: number;
+  badAnswers: number;
+  setRealAccuracy: (realAcuuracy: number) => void;
+  setBadAnswers: (badAnswer: number) => void;
+  setAccuracy: (accuracy: number) => void;
   setFormattedTime: (formatedTime: string) => void;
   setTotalTime: (totalTime: number) => void;
   setSnippets: (snippets: CodeExample[]) => void;
@@ -31,6 +37,8 @@ interface GameStore {
 export const useGameStore = create<GameStore>()(
   devtools(
     (set) => ({
+      realAccuracy: 0,
+      accuracy: 0,
       cpm: 0,
       formatedTime: "",
       totalTime: 0,
@@ -41,6 +49,10 @@ export const useGameStore = create<GameStore>()(
       isStarted: false,
       isFinish: false,
       goodAnswers: 0,
+      badAnswers: 0,
+      setRealAccuracy: (realAccuracy) => set({ realAccuracy }),
+      setBadAnswers: (badAnswers) => set({ badAnswers }),
+      setAccuracy: (accuracy) => set({ accuracy }),
       setFormattedTime: (formatedTime) => set({ formatedTime }),
       setTotalTime: (totalTime) => set({ totalTime }),
       setSnippets: (snippets) => set({ snippets }),
@@ -61,6 +73,9 @@ export const useGameStore = create<GameStore>()(
           isStarted: false,
           isFinish: false,
           goodAnswers: 0,
+          badAnswers: 0,
+          accuracy: 0,
+          realAccuracy: 0,
         });
       },
       nextSnippet: () => {
@@ -74,6 +89,9 @@ export const useGameStore = create<GameStore>()(
           isStarted: false,
           isFinish: false,
           goodAnswers: 0,
+          badAnswers: 0,
+          accuracy: 0,
+          realAccuracy: 0,
         }));
       },
     }),

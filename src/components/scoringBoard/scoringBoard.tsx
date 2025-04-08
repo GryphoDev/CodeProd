@@ -14,6 +14,8 @@ type Scores = {
   date: string;
   snippet: string;
   time: string;
+  realAccuracy: number;
+  length: number;
 };
 
 export function ScoringBoard() {
@@ -43,17 +45,21 @@ export function ScoringBoard() {
       <TableHeader>
         <TableRow>
           <TableHead className="font-bold">Language</TableHead>
-          <TableHead className="font-bold">Date</TableHead>
-          <TableHead className="font-bold">CPM</TableHead>
+          <TableHead className="font-bold text-center">Length</TableHead>
+          <TableHead className="font-bold text-center">Date</TableHead>
+          <TableHead className="font-bold text-center">CPM</TableHead>
+          <TableHead className="font-bold text-center">Real Accuracy</TableHead>
           <TableHead className="text-right font-bold">Total Time</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        {scores.map(({ cpm, date, snippet, time }) => (
+        {scores.map(({ cpm, date, snippet, time, realAccuracy, length }) => (
           <TableRow key={date.toString()}>
             <TableCell className="text-left">{snippet}</TableCell>
-            <TableCell>{date}</TableCell>
-            <TableCell>{cpm}</TableCell>
+            <TableCell className="text-center">{length}</TableCell>
+            <TableCell className="text-center">{date}</TableCell>
+            <TableCell className="text-center">{cpm}</TableCell>
+            <TableCell className="text-center">{`${realAccuracy}%`}</TableCell>
             <TableCell className="text-right">{time}</TableCell>
           </TableRow>
         ))}
