@@ -9,7 +9,6 @@ export const useHandleStartGame = () => {
 
   const handleStartGame = () => {
     const isValid = difficulty && gameMode && langChecked.length > 0;
-    console.log(isValid);
     if (isValid) {
       navigate("/game");
       setError(false);

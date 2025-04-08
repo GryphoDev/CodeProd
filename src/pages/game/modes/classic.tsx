@@ -18,10 +18,8 @@ export function ClassicMode() {
     accuracy,
     resetGame,
     nextSnippet,
-    setLastCheckedIndex,
   } = useGameController();
   const dummyRef = useRef<HTMLDivElement>(null);
-  console.log("classic.tsx");
 
   return (
     <div className="flex flex-col justify-center items-center gap-10 py-20">
@@ -71,7 +69,6 @@ export function ClassicMode() {
           children="Restart"
           onClick={() => {
             resetGame();
-            setLastCheckedIndex(0);
             dummyRef.current?.focus();
           }}
         />
@@ -79,7 +76,6 @@ export function ClassicMode() {
           children="Next"
           onClick={() => {
             nextSnippet();
-            setLastCheckedIndex(0);
             dummyRef.current?.focus();
           }}
         />

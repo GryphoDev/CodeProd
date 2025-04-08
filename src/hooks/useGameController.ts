@@ -4,7 +4,7 @@ import { useStore } from "@/store/dataStore";
 import { useGameSettingsStore } from "@/store/gameSettingsStore";
 import { useGameStore } from "@/store/gameStore";
 import { shuffleArray } from "@/utils/shuffleArray";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 // hooks/useGameController.js
@@ -34,6 +34,7 @@ export function useGameController() {
   const allSnippets = useStore((state) => state.allSnippets);
   const currentCode = snippets[snippetIndex]?.code;
   const currentLanguage = snippets[snippetIndex]?.language;
+  const [lastCheckedIndex, setLastCheckedIndex] = useState(0);
 
   // Hook that implement all the keyboard behaviour
   useKeyboard();
@@ -61,12 +62,13 @@ export function useGameController() {
 
     setGoodAnswers(count);
 
-    if (userInput.length > currentCode.length) {
-      for (let i = 0; i < userInput.length; i++) {
+    if (userInput.length > lastCheckedIndex) {
+      for (let i = lastCheckedIndex; i < userInput.length; i++) {
         if (userInput[i] !== currentCode[i]) {
           setBadAnswers(badAnswers + 1);
         }
       }
+      setLastCheckedIndex(userInput.length);
     }
   }, [
     userInput,
@@ -76,6 +78,7 @@ export function useGameController() {
     badAnswers,
     setBadAnswers,
     currentCode,
+    lastCheckedIndex,
   ]);
 
   return {
