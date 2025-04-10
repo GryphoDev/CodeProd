@@ -1,6 +1,6 @@
 import { useGameController } from "@/hooks/useGameController";
 import { useRef } from "react";
-import { CodeSnippetDisplay } from "../utils/codeDisplay";
+import { CodeSnippetDisplay } from "../../../utils/codeDisplay";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Terminal } from "lucide-react";
 import { Button } from "@/components/ui/button";

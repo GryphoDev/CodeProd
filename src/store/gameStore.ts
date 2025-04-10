@@ -18,7 +18,8 @@ interface GameStore {
   goodAnswers: number;
   badAnswers: number;
   timeLeft: number;
-  setRealAccuracy: (realAcuuracy: number) => void;
+  lastCheckedIndex: number;
+  setRealAccuracy: (realAccuracy: number) => void;
   setBadAnswers: (badAnswer: number) => void;
   setAccuracy: (accuracy: number) => void;
   setFormattedTime: (formatedTime: string) => void;
@@ -35,6 +36,7 @@ interface GameStore {
   nextSnippet: () => void;
   goToNextSnippet: () => void;
   setTimeLeft: (timeLeft: number) => void;
+  setLastCheckedIndex: (lastCheckedIndex: number) => void;
 }
 
 export const useGameStore = create<GameStore>()(
@@ -54,6 +56,7 @@ export const useGameStore = create<GameStore>()(
       goodAnswers: 0,
       badAnswers: 0,
       timeLeft: 0,
+      lastCheckedIndex: 0,
       setRealAccuracy: (realAccuracy) => set({ realAccuracy }),
       setBadAnswers: (badAnswers) => set({ badAnswers }),
       setAccuracy: (accuracy) => set({ accuracy }),
@@ -68,6 +71,7 @@ export const useGameStore = create<GameStore>()(
       setGoodAnswers: (goodAnswers) => set({ goodAnswers }),
       setCpm: (cpm) => set({ cpm }),
       setTimeLeft: (timeLeft) => set({ timeLeft }),
+      setLastCheckedIndex: (lastCheckedIndex) => set({ lastCheckedIndex }),
       resetGame: () => {
         set({
           cpm: 0,
@@ -81,6 +85,7 @@ export const useGameStore = create<GameStore>()(
           badAnswers: 0,
           accuracy: 0,
           realAccuracy: 0,
+          lastCheckedIndex: 0,
         });
       },
       nextSnippet: () => {
@@ -97,6 +102,7 @@ export const useGameStore = create<GameStore>()(
           badAnswers: 0,
           accuracy: 0,
           realAccuracy: 0,
+          lastCheckedIndex: 0,
         }));
       },
       goToNextSnippet: () => {

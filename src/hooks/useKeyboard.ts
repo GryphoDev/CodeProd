@@ -1,16 +1,12 @@
-import { useEffect, useCallback, useState } from "react";
+import { useEffect, useCallback } from "react";
 import { useGameStore } from "@/store/gameStore";
-import { format } from "date-fns";
 import { useGameSettingsStore } from "@/store/gameSettingsStore";
+import { useCalculateResults } from "./useCalculateResult";
 
 export const useKeyboard = () => {
   const {
     isStarted,
     timeLeft,
-    setAccuracy,
-    cpm,
-    badAnswers,
-    goodAnswers,
     snippets,
     snippetIndex,
     userInput,
@@ -19,25 +15,19 @@ export const useKeyboard = () => {
     setError,
     setIsStarted,
     setIsFinish,
-    setTotalTime,
-    setFormattedTime,
-    setCpm,
-    setRealAccuracy,
     goToNextSnippet,
   } = useGameStore();
 
-  const { gameMode, difficulty } = useGameSettingsStore();
-  const [startTime, setStartTime] = useState<number | null>(null);
-  const [endTime, setEndTime] = useState<number | null>(null);
+  const { gameMode } = useGameSettingsStore();
+  const { setEndTime, setStartTime, startTime } = useCalculateResults();
 
   useEffect(() => {
     if (isFinish) {
-      console.log("isFinish");
       setStartTime(null);
       setEndTime(null);
     }
     return;
-  }, [snippetIndex, isFinish]);
+  }, [snippetIndex, isFinish, setEndTime, setStartTime]);
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -90,6 +80,7 @@ export const useKeyboard = () => {
     },
 
     [
+      setStartTime,
       snippets,
       snippetIndex,
       userInput,
@@ -102,79 +93,9 @@ export const useKeyboard = () => {
       gameMode,
       timeLeft,
       goToNextSnippet,
+      setEndTime,
     ]
   );
-
-  useEffect(() => {
-    if (endTime && startTime) {
-      const totalTimeInSeconds = (endTime - startTime) / 1000;
-      setTotalTime(totalTimeInSeconds);
-
-      const minutes = Math.floor(totalTimeInSeconds / 60);
-      const seconds = Math.floor(totalTimeInSeconds % 60);
-      const formatted = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
-      setFormattedTime(formatted);
-
-      const userCpm = Math.floor(((goodAnswers + 1) / totalTimeInSeconds) * 60);
-      setCpm(userCpm);
-
-      const totalLength = snippets[snippetIndex]?.code.length;
-      const accuracy = Math.ceil(
-        totalLength > 0 ? ((goodAnswers + 1) / totalLength) * 100 : 0
-      );
-      setAccuracy(accuracy);
-      const realAccuracy = Math.ceil(
-        totalLength > 0
-          ? ((goodAnswers + 1 - badAnswers) / totalLength) * 100
-          : 0
-      );
-      setRealAccuracy(realAccuracy);
-
-      if (userCpm === 0) return;
-
-      const newResult = {
-        snippet: snippets[snippetIndex]?.language,
-        length: snippets[snippetIndex]?.code.length,
-        date: format(new Date(), "EEEE d MMMM yyyy, HH:mm:ss"),
-        cpm: userCpm,
-        realAccuracy: realAccuracy,
-        time: formatted,
-        ...(gameMode === "survival" && {
-          error: badAnswers,
-          difficulty: difficulty,
-        }),
-      };
-
-      const savedResults = JSON.parse(
-        localStorage.getItem(`${gameMode}Results`) || "[]"
-      );
-
-      const updatedResults = [...savedResults, newResult]
-        .sort((a, b) => b.cpm - a.cpm)
-        .slice(0, 10);
-
-      localStorage.setItem(
-        `${gameMode}Results`,
-        JSON.stringify(updatedResults)
-      );
-      window.dispatchEvent(new Event("scoreUpdated"));
-    }
-  }, [
-    cpm,
-    endTime,
-    startTime,
-    setTotalTime,
-    setFormattedTime,
-    setCpm,
-    goodAnswers,
-    snippetIndex,
-    snippets,
-    setAccuracy,
-    badAnswers,
-    setRealAccuracy,
-    difficulty,
-    gameMode,
-  ]);
 
   useEffect(() => {
     if (isFinish) return;
