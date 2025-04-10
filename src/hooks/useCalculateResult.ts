@@ -15,6 +15,8 @@ export function useCalculateResults() {
     setFormattedTime,
     setCpm,
     setRealAccuracy,
+    totalGoodAnswers,
+    totalUserInputLength,
   } = useGameStore();
   const { gameMode, difficulty } = useGameSettingsStore();
 
@@ -30,19 +32,31 @@ export function useCalculateResults() {
       const seconds = Math.floor(totalTimeInSeconds % 60);
       const formatted = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
       setFormattedTime(formatted);
+      console.log(`total answers : ${totalGoodAnswers}`);
+      console.log(`total length : ${totalUserInputLength}`);
 
-      const userCpm = Math.floor(((goodAnswers + 1) / totalTimeInSeconds) * 60);
+      const userCpm = Math.floor(
+        ((totalGoodAnswers + 1) / totalTimeInSeconds) * 60
+      );
       setCpm(userCpm);
+      // Nombre d'erreurs corrigées = nombre total d'erreurs - erreurs actuelles
+      // Les erreurs actuelles = totalUserInputLength - (totalGoodAnswers + 1)
+      const currentErrors = totalUserInputLength - (totalGoodAnswers + 1);
+      const correctedErrors = badAnswers - currentErrors;
 
-      const totalLength = snippets[snippetIndex]?.code.length;
+      // Accuracy - basée sur l'état actuel
       const accuracy = Math.ceil(
-        totalLength > 0 ? ((goodAnswers + 1) / totalLength) * 100 : 0
+        totalUserInputLength > 0
+          ? ((totalGoodAnswers + 1) / totalUserInputLength) * 100
+          : 0
       );
       setAccuracy(accuracy);
+
+      // RealAccuracy - prend en compte toutes les erreurs commises
+      // Si aucune erreur n'a été corrigée, elle sera identique à accuracy
+      const totalAttempts = totalUserInputLength + correctedErrors;
       const realAccuracy = Math.ceil(
-        totalLength > 0
-          ? ((goodAnswers + 1 - badAnswers) / totalLength) * 100
-          : 0
+        totalAttempts > 0 ? ((totalGoodAnswers + 1) / totalAttempts) * 100 : 0
       );
       setRealAccuracy(realAccuracy);
 
@@ -90,6 +104,8 @@ export function useCalculateResults() {
     setRealAccuracy,
     difficulty,
     gameMode,
+    totalGoodAnswers,
+    totalUserInputLength,
   ]);
   return { setEndTime, setStartTime, startTime };
 }

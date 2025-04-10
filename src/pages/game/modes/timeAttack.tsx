@@ -29,7 +29,6 @@ export function TimeAttackMode() {
     accuracy,
     resetGame,
     nextSnippet,
-    goToNextSnippet,
   } = useGameController();
 
   const dummyRef = useRef<HTMLDivElement>(null);
@@ -90,7 +89,6 @@ export function TimeAttackMode() {
           onClick={() => {
             resetTimer();
             resetGame();
-            goToNextSnippet();
             dummyRef.current?.focus();
           }}
         />
@@ -99,7 +97,6 @@ export function TimeAttackMode() {
           onClick={() => {
             resetTimer();
             nextSnippet();
-            goToNextSnippet();
             dummyRef.current?.focus();
           }}
         />

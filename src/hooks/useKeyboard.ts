@@ -16,6 +16,10 @@ export const useKeyboard = () => {
     setIsStarted,
     setIsFinish,
     goToNextSnippet,
+    setTotalUserInputLength,
+    totalUserInputLength,
+    setTotalGoodAnswers,
+    goodAnswers,
   } = useGameStore();
 
   const { gameMode } = useGameSettingsStore();
@@ -42,9 +46,11 @@ export const useKeyboard = () => {
       if (e.key === "Enter") {
         setError(false);
         newInput += "\n";
+        setTotalUserInputLength(totalUserInputLength + 1);
       } else if (e.key === "Backspace") {
         setError(false);
         newInput = newInput.slice(0, -1);
+        setTotalUserInputLength(totalUserInputLength - 1);
       } else if (expectedChar === "\n") {
         setError(true);
         e.preventDefault();
@@ -52,11 +58,14 @@ export const useKeyboard = () => {
       } else if (e.key === " ") {
         e.preventDefault();
         newInput += " ";
+        setTotalUserInputLength(totalUserInputLength + 1);
       } else if (e.key === "Tab") {
         e.preventDefault();
         newInput += "    ";
+        setTotalUserInputLength(totalUserInputLength + 4);
       } else if (e.key.length === 1) {
         newInput += e.key;
+        setTotalUserInputLength(totalUserInputLength + 1);
       }
 
       setUserInput(newInput);
@@ -68,11 +77,13 @@ export const useKeyboard = () => {
         goToNextSnippet();
       }
 
-      if (timeLeft !== null && timeLeft > 0) {
-        return;
-      }
+      if (gameMode === "timeAttack") return;
 
-      if (newInput.length >= currentSnippet.length) {
+      if (
+        gameMode !== "timeAttack" &&
+        newInput.length >= currentSnippet.length
+      ) {
+        setTotalGoodAnswers((prev) => prev + goodAnswers);
         setEndTime(Date.now());
         window.removeEventListener("keydown", handleKeyDown);
         setIsFinish(true);
@@ -91,9 +102,12 @@ export const useKeyboard = () => {
       setIsFinish,
       startTime,
       gameMode,
-      timeLeft,
       goToNextSnippet,
       setEndTime,
+      setTotalUserInputLength,
+      totalUserInputLength,
+      goodAnswers,
+      setTotalGoodAnswers,
     ]
   );
 
@@ -106,19 +120,23 @@ export const useKeyboard = () => {
   }, [handleKeyDown, isFinish]);
 
   useEffect(() => {
+    if (isFinish) return;
     if (gameMode === "timeAttack") {
-      if (isStarted && !isFinish && timeLeft === 0) {
+      if (timeLeft === 0) {
+        setTotalGoodAnswers((prev) => prev + goodAnswers);
         setEndTime(Date.now() || startTime);
         setIsFinish(true);
       }
     }
   }, [
     timeLeft,
-    isStarted,
     isFinish,
     setIsFinish,
     setEndTime,
     startTime,
     gameMode,
+    setTotalGoodAnswers,
+    goodAnswers,
+    isStarted,
   ]);
 };

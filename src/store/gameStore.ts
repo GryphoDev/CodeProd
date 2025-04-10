@@ -16,9 +16,11 @@ interface GameStore {
   isStarted: boolean;
   isFinish: boolean;
   goodAnswers: number;
+  totalGoodAnswers: number;
   badAnswers: number;
   timeLeft: number;
   lastCheckedIndex: number;
+  totalUserInputLength: number;
   setRealAccuracy: (realAccuracy: number) => void;
   setBadAnswers: (badAnswer: number) => void;
   setAccuracy: (accuracy: number) => void;
@@ -37,6 +39,8 @@ interface GameStore {
   goToNextSnippet: () => void;
   setTimeLeft: (timeLeft: number) => void;
   setLastCheckedIndex: (lastCheckedIndex: number) => void;
+  setTotalUserInputLength: (totalUserInputLength: number) => void;
+  setTotalGoodAnswers: (update: number | ((prev: number) => number)) => void;
 }
 
 export const useGameStore = create<GameStore>()(
@@ -57,6 +61,10 @@ export const useGameStore = create<GameStore>()(
       badAnswers: 0,
       timeLeft: 0,
       lastCheckedIndex: 0,
+      totalUserInputLength: 0,
+      totalGoodAnswers: 0,
+      setTotalUserInputLength: (totalUserInputLength) =>
+        set({ totalUserInputLength }),
       setRealAccuracy: (realAccuracy) => set({ realAccuracy }),
       setBadAnswers: (badAnswers) => set({ badAnswers }),
       setAccuracy: (accuracy) => set({ accuracy }),
@@ -72,6 +80,13 @@ export const useGameStore = create<GameStore>()(
       setCpm: (cpm) => set({ cpm }),
       setTimeLeft: (timeLeft) => set({ timeLeft }),
       setLastCheckedIndex: (lastCheckedIndex) => set({ lastCheckedIndex }),
+      setTotalGoodAnswers: (update) =>
+        set((state) => ({
+          totalGoodAnswers:
+            typeof update === "function"
+              ? update(state.totalGoodAnswers)
+              : update,
+        })),
       resetGame: () => {
         set({
           cpm: 0,
@@ -86,6 +101,8 @@ export const useGameStore = create<GameStore>()(
           accuracy: 0,
           realAccuracy: 0,
           lastCheckedIndex: 0,
+          totalGoodAnswers: 0,
+          totalUserInputLength: 0,
         });
       },
       nextSnippet: () => {
@@ -103,15 +120,19 @@ export const useGameStore = create<GameStore>()(
           accuracy: 0,
           realAccuracy: 0,
           lastCheckedIndex: 0,
+          totalGoodAnswers: 0,
+          totalUserInputLength: 0,
         }));
       },
       goToNextSnippet: () => {
         set((state) => ({
           snippetIndex: (state.snippetIndex + 1) % state.snippets.length,
+          totalGoodAnswers: state.totalGoodAnswers + state.goodAnswers,
           userInput: "",
           isStarted: true,
           isFinish: false,
           error: false,
+          lastCheckedIndex: 0,
         }));
       },
     }),

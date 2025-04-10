@@ -16,7 +16,6 @@ export function useCalculateAnswers() {
 
   // counter for good and bad answers
   useEffect(() => {
-    console.log(lastCheckedIndex);
     if (!currentCode) return;
     let count = 0;
 
@@ -25,7 +24,6 @@ export function useCalculateAnswers() {
         count++;
       }
     }
-
     setGoodAnswers(count);
 
     if (userInput.length > lastCheckedIndex) {
