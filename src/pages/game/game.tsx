@@ -19,7 +19,7 @@ export function Game() {
     return <ClassicMode />;
   } else if (gameMode === "timeAttack") {
     return <TimeAttackMode />;
-  } else if (gameMode === "practice") {
+  } else if (gameMode === "survival") {
     return <SurvivalMode />;
   }
 

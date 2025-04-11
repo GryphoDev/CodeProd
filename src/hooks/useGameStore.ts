@@ -1,0 +1,37 @@
+// hooks/useGameState.ts
+import { useGameStore } from "@/store/gameStore";
+
+export const useGameState = () =>
+  useGameStore((state) => ({
+    realAccuracy: state.realAccuracy,
+    accuracy: state.accuracy,
+    snippets: state.snippets,
+    snippetIndex: state.snippetIndex,
+    userInput: state.userInput,
+    error: state.error,
+    isStarted: state.isStarted,
+    isFinish: state.isFinish,
+    goodAnswers: state.goodAnswers,
+    totalGoodAnswers: state.totalGoodAnswers,
+    badAnswers: state.badAnswers,
+    timeLeft: state.timeLeft,
+    lastCheckedIndex: state.lastCheckedIndex,
+    totalUserInputLength: state.totalUserInputLength,
+    setRealAccuracy: state.setRealAccuracy,
+    setAccuracy: state.setAccuracy,
+    setSnippets: state.setSnippets,
+    setSnippetIndex: state.setSnippetIndex,
+    setUserInput: state.setUserInput,
+    setError: state.setError,
+    setIsStarted: state.setIsStarted,
+    setIsFinish: state.setIsFinish,
+    setGoodAnswers: state.setGoodAnswers,
+    setBadAnswers: state.setBadAnswers,
+    setTimeLeft: state.setTimeLeft,
+    setLastCheckedIndex: state.setLastCheckedIndex,
+    setTotalUserInputLength: state.setTotalUserInputLength,
+    setTotalGoodAnswers: state.setTotalGoodAnswers,
+    resetGame: state.resetGame,
+    nextSnippet: state.nextSnippet,
+    goToNextSnippet: state.goToNextSnippet,
+  }));

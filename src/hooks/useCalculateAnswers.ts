@@ -11,6 +11,7 @@ export function useCalculateAnswers() {
     setBadAnswers,
     lastCheckedIndex,
     setLastCheckedIndex,
+    set,
   } = useGameStore();
   const currentCode = snippets[snippetIndex]?.code;
 
@@ -34,6 +35,8 @@ export function useCalculateAnswers() {
       }
       setLastCheckedIndex(userInput.length);
     }
+
+    setTotalGoodAnswers((prev) => prev + goodAnswers);
   }, [
     userInput,
     snippetIndex,

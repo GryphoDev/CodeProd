@@ -32,7 +32,6 @@ export function ScoringBoard() {
       );
       setScores(updatedScores);
     };
-
     handleScoreUpdated();
     window.addEventListener("scoreUpdated", handleScoreUpdated);
 
