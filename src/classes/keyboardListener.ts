@@ -15,6 +15,7 @@ interface GameStore {
   setIsFinish: (isFinish: boolean) => void;
   setTotalGoodAnswers: (update: number | ((prev: number) => number)) => void;
   goodAnswers: number;
+  isFinish: boolean;
 }
 
 export class KeyboardListener {
@@ -86,6 +87,8 @@ export class KeyboardListener {
 
   endListening() {
     if (this.newUserInput.length >= this.currentSnippet.length) {
+      console.log(this.newUserInput);
+      console.log(this.currentSnippet.length);
       this.gs.setTotalGoodAnswers((prev) => prev + this.gs.goodAnswers);
       this.gs.setEndTime(Date.now());
       this.gs.setIsFinish(true);
@@ -95,9 +98,27 @@ export class KeyboardListener {
   }
 
   startListening() {
-    window.addEventListener("keydown", this.handleKeyboard);
+    if (!this.gs.isFinish) {
+      window.addEventListener("keydown", this.handleKeyboard);
+    }
   }
   stopListening() {
     window.removeEventListener("keydown", this.handleKeyboard);
+  }
+}
+
+export class KeyboardListenerTimeAttackMode extends KeyboardListener {
+  goToNextSnippet: () => void;
+
+  constructor(gs: GameStore, goToNextSnippet: () => void) {
+    super(gs);
+    this.goToNextSnippet = goToNextSnippet;
+  }
+  endListening() {
+    if (this.newUserInput.length >= this.currentSnippet.length) {
+      console.log("increment total good answers");
+      this.gs.setTotalGoodAnswers((prev) => prev + this.gs.goodAnswers);
+      this.goToNextSnippet();
+    }
   }
 }

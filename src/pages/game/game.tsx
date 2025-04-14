@@ -1,9 +1,9 @@
 import { useGameSettingsStore } from "@/store/gameSettingsStore";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { ClassicMode } from "./modes/classic";
-import { TimeAttackMode } from "./modes/timeAttack";
-import { SurvivalMode } from "./modes/survival";
+import { ClassicMode } from "./modes/classic/classic";
+import { TimeAttackMode } from "./modes/timeAttack/timeAttack";
+import { SurvivalMode } from "./modes/survival/survival";
 
 export function Game() {
   const { gameMode, difficulty, langChecked } = useGameSettingsStore();

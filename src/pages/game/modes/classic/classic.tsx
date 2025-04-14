@@ -12,7 +12,7 @@ import { CodeSnippetDisplay } from "@/utils/codeDisplay";
 import { Terminal } from "lucide-react";
 import { useEffect, useMemo, useRef } from "react";
 
-export function SurvivalMode() {
+export function ClassicMode() {
   const {
     snippets,
     snippetIndex,
@@ -69,6 +69,7 @@ export function SurvivalMode() {
       setIsFinish,
       setTotalGoodAnswers,
       goodAnswers,
+      isFinish,
     }),
     [
       snippets,
@@ -85,6 +86,7 @@ export function SurvivalMode() {
       setIsFinish,
       setTotalGoodAnswers,
       goodAnswers,
+      isFinish,
     ]
   );
 
@@ -217,8 +219,8 @@ export function SurvivalMode() {
           {accuracy < 100 && accuracy - realAccuracy !== 0 && (
             <span className="text-sm">
               {`You missed a few characters, and even after fixing the mistakes,
-        there’s still a ${accuracy - realAccuracy}% difference due to the
-        errors.`}
+          there’s still a ${accuracy - realAccuracy}% difference due to the
+          errors.`}
             </span>
           )}
           {accuracy < 100 && accuracy === realAccuracy && (
