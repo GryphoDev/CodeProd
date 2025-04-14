@@ -1,7 +1,7 @@
 import { CalculateAnswers } from "@/classes/calculateAnswers";
 import { CalculateResult } from "@/classes/calculateResult";
 import { SnippetsHandler } from "@/classes/getSnippets";
-import { KeyboardListener } from "@/classes/keyboardListener";
+import { KeyboardListenerTimeAttackMode } from "@/classes/keyboardListener";
 import { ScoringBoard } from "@/components/scoringBoard/scoringBoard";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
@@ -45,13 +45,28 @@ export function SurvivalMode() {
     setAccuracy,
     setRealAccuracy,
     setTotalGoodAnswers,
+    goToNextSnippet,
   } = useGameStore();
-  const { langChecked, difficulty, gameMode } = useGameSettingsStore();
+  const { langChecked, gameMode } = useGameSettingsStore();
+  const { difficulty } = useGameSettingsStore() as {
+    difficulty: keyof typeof lvls;
+  };
   const allSnippets = useStore((state) => state.allSnippets);
   const dummyRef = useRef<HTMLDivElement>(null);
   const hasSavedResultsRef = useRef(false);
   const currentCode = snippets[snippetIndex]?.code;
   const currentLanguage = snippets[snippetIndex]?.language;
+
+  const lvls = useMemo(
+    () => ({
+      easy: 10,
+      medium: 5,
+      hard: 1,
+    }),
+    []
+  );
+
+  const errorLimit = lvls[difficulty];
 
   const keyboardProps = useMemo(
     () => ({
@@ -165,13 +180,34 @@ export function SurvivalMode() {
   useEffect(() => {
     // Start listening keyboard
     if (snippets && snippets.length) {
-      const keyboardHandler = new KeyboardListener(keyboardProps);
+      const keyboardHandler = new KeyboardListenerTimeAttackMode(
+        keyboardProps,
+        goToNextSnippet
+      );
       keyboardHandler.startListening();
       return () => {
         keyboardHandler.stopListening();
       };
     }
-  }, [keyboardProps, snippets]);
+  }, [keyboardProps, snippets, lvls, difficulty, badAnswers, goToNextSnippet]);
+
+  useEffect(() => {
+    if (isStarted && badAnswers >= errorLimit) {
+      setTotalGoodAnswers((prev) => prev + goodAnswers);
+      setEndTime(Date.now());
+      setIsFinish(true);
+      setIsStarted(false);
+    }
+  }, [
+    setTotalGoodAnswers,
+    setEndTime,
+    setIsFinish,
+    setIsStarted,
+    goodAnswers,
+    badAnswers,
+    errorLimit,
+    isStarted,
+  ]);
 
   useEffect(() => {
     // Calculate Good and Bad response
