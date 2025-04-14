@@ -196,11 +196,11 @@ export function TimeAttackMode() {
 
   // Start listening keyboard
   useEffect(() => {
-    const keyboardHandler = new KeyboardListenerTimeAttackMode(
-      keyboardProps,
-      goToNextSnippet
-    );
     if (snippets && snippets.length) {
+      const keyboardHandler = new KeyboardListenerTimeAttackMode(
+        keyboardProps,
+        goToNextSnippet
+      );
       keyboardHandler.startListening();
       return () => {
         keyboardHandler.stopListening();

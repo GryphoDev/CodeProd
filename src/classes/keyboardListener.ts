@@ -87,9 +87,7 @@ export class KeyboardListener {
 
   endListening() {
     if (this.newUserInput.length >= this.currentSnippet.length) {
-      console.log(this.newUserInput);
-      console.log(this.currentSnippet.length);
-      this.gs.setTotalGoodAnswers((prev) => prev + this.gs.goodAnswers);
+      this.gs.setTotalGoodAnswers((prev) => prev + (this.gs.goodAnswers + 1));
       this.gs.setEndTime(Date.now());
       this.gs.setIsFinish(true);
       this.gs.setIsStarted(false);
@@ -116,8 +114,6 @@ export class KeyboardListenerTimeAttackMode extends KeyboardListener {
   }
   endListening() {
     if (this.newUserInput.length >= this.currentSnippet.length) {
-      console.log("increment total good answers");
-      this.gs.setTotalGoodAnswers((prev) => prev + this.gs.goodAnswers);
       this.goToNextSnippet();
     }
   }

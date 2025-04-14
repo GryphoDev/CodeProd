@@ -49,14 +49,14 @@ export class CalculateResult {
 
   getCpm() {
     this.userCpm = Math.floor(
-      ((this.gs.totalGoodAnswers + 1) / this.totalTimeInSeconds) * 60
+      (this.gs.totalGoodAnswers / this.totalTimeInSeconds) * 60
     );
   }
 
   getAccuracy() {
     this.accuracy = Math.ceil(
       this.gs.totalUserInputLength > 0
-        ? ((this.gs.totalGoodAnswers + 1) / this.gs.totalUserInputLength) * 100
+        ? (this.gs.totalGoodAnswers / this.gs.totalUserInputLength) * 100
         : 0
     );
     this.gs.setAccuracy(this.accuracy);
@@ -64,13 +64,11 @@ export class CalculateResult {
 
   getRealAccuracy() {
     const currentErrors =
-      this.gs.totalUserInputLength - (this.gs.totalGoodAnswers + 1);
+      this.gs.totalUserInputLength - this.gs.totalGoodAnswers;
     const correctedErrors = this.gs.badAnswers - currentErrors;
     const totalAttempts = this.gs.totalUserInputLength + correctedErrors;
     this.realAccuracy = Math.ceil(
-      totalAttempts > 0
-        ? ((this.gs.totalGoodAnswers + 1) / totalAttempts) * 100
-        : 0
+      totalAttempts > 0 ? (this.gs.totalGoodAnswers / totalAttempts) * 100 : 0
     );
     this.gs.setRealAccuracy(this.realAccuracy);
   }

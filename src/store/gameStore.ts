@@ -121,7 +121,7 @@ export const useGameStore = create<GameStore>()(
       goToNextSnippet: () => {
         set((state) => ({
           snippetIndex: (state.snippetIndex + 1) % state.snippets.length,
-          totalGoodAnswers: state.totalGoodAnswers + state.goodAnswers,
+          totalGoodAnswers: state.totalGoodAnswers + (state.goodAnswers + 1),
           userInput: "",
           isStarted: true,
           isFinish: false,
