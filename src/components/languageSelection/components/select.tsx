@@ -12,15 +12,17 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
+type DifficultyOption = {
+  value: string;
+  label: string;
+  description: string;
+};
+
 type SelectionProps = {
   value: string;
   onValueChange: (e: string) => void;
   selectValue: string;
-  data: {
-    value: string;
-    label: string;
-    description: string;
-  }[];
+  data: DifficultyOption[];
 };
 
 export function Selection({

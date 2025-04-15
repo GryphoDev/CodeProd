@@ -272,13 +272,12 @@ export function TimeAttackMode() {
           <AlertDescription>Press Enter Key</AlertDescription>
         </Alert>
       )}
-      <div className="text-xl font-mono">
-        Time Left:{" "}
+      <span>
         {Math.floor(timeLeft / 60)
           .toString()
           .padStart(2, "0")}
         :{(timeLeft % 60).toString().padStart(2, "0")}
-      </div>
+      </span>
       {!isStarted && !isFinish && (
         <span>Once you’re ready, start typing to begin the timer.</span>
       )}

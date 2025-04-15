@@ -17,7 +17,7 @@ export function Intro() {
       </Paragraph>
       <Paragraph>
         When typing becomes second nature, coding feels effortless and fluid.
-        Ready to break speed records and dominate your keyboard?
+        Ready to break speed records and dominate your keyboard?{" "}
         <span className="font-semibold text-chart-4 text-lg font-serif">
           The challenge is yours to conquer!
         </span>

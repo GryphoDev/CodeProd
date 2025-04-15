@@ -191,6 +191,7 @@ export function SurvivalMode() {
     }
   }, [keyboardProps, snippets, lvls, difficulty, badAnswers, goToNextSnippet]);
 
+  // Listening max mistakes
   useEffect(() => {
     if (isStarted && badAnswers >= errorLimit) {
       setTotalGoodAnswers((prev) => prev + goodAnswers);
@@ -241,7 +242,8 @@ export function SurvivalMode() {
           <AlertDescription>Press Enter Key</AlertDescription>
         </Alert>
       )}
-      {!isStarted && (
+      <span>{`${badAnswers} / ${lvls[difficulty]}`}</span>
+      {!isStarted && !isFinish && (
         <span>Once you’re ready, start typing to begin the timer.</span>
       )}
       {isFinish && (

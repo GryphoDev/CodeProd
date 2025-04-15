@@ -26,7 +26,15 @@ export function LanguageSelectionContainer() {
           value={difficulty}
           onValueChange={setDifficulty}
           selectValue="Difficulty"
-          data={data.difficulties}
+          data={
+            gameMode === "classic"
+              ? data.difficulties.classicDifficulties
+              : gameMode === "survival"
+              ? data.difficulties.survivalDifficulies
+              : gameMode === "timeAttack"
+              ? data.difficulties.timeAttackDifficulties
+              : []
+          }
         />
         <Button children="Start Coding" onClick={handleStartGame} />
       </div>

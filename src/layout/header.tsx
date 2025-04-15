@@ -9,12 +9,17 @@ export function Header() {
 
   return (
     <header className="py-4 px-2 border-b-[1px] flex justify-between items-center">
-      <div className="flex gap-2">
+      <div className="flex items-center gap-4">
         {location.pathname === "/game" && (
           <Link to="/">
             <ArrowLeft onClick={resetGame} className="cursor-pointer" />
           </Link>
         )}
+        <img
+          className="w-8 h-8 rounded-full object-cover shadow-2xl"
+          src="jr-korpa-O-p6tKWPPig-unsplash.jpg"
+          alt=""
+        />
         <h1 className="font-bold">CODEPROD</h1>
       </div>
       <ModeToggle />

@@ -46,28 +46,38 @@ export function ScoringBoard() {
       <TableHeader>
         <TableRow>
           <TableHead className="font-bold">Language</TableHead>
-          {gameMode !== "timeAttack" && (
+          {gameMode !== "timeAttack" && gameMode !== "survival" && (
             <TableHead className="font-bold text-center">Length</TableHead>
           )}
           <TableHead className="font-bold text-center">Date</TableHead>
           <TableHead className="font-bold text-center">CPM</TableHead>
           <TableHead className="font-bold text-center">Real Accuracy</TableHead>
+          {gameMode === "survival" && (
+            <TableHead className="font-bold text-center">
+              Max Mistakes
+            </TableHead>
+          )}
           <TableHead className="text-right font-bold">Total Time</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        {scores.map(({ cpm, date, snippet, time, realAccuracy, length }) => (
-          <TableRow key={date.toString()}>
-            <TableCell className="text-left">{snippet}</TableCell>
-            {gameMode !== "timeAttack" && (
-              <TableCell className="text-center">{length}</TableCell>
-            )}
-            <TableCell className="text-center">{date}</TableCell>
-            <TableCell className="text-center">{cpm}</TableCell>
-            <TableCell className="text-center">{`${realAccuracy}%`}</TableCell>
-            <TableCell className="text-right">{time}</TableCell>
-          </TableRow>
-        ))}
+        {scores.map(
+          ({ cpm, date, snippet, time, realAccuracy, length, error }) => (
+            <TableRow key={date.toString()}>
+              <TableCell className="text-left">{snippet}</TableCell>
+              {gameMode !== "timeAttack" && gameMode !== "survival" && (
+                <TableCell className="text-center">{length}</TableCell>
+              )}
+              <TableCell className="text-center">{date}</TableCell>
+              <TableCell className="text-center">{cpm}</TableCell>
+              <TableCell className="text-center">{`${realAccuracy}%`}</TableCell>
+              {gameMode === "survival" && (
+                <TableCell className="text-center">{error}</TableCell>
+              )}
+              <TableCell className="text-right">{time}</TableCell>
+            </TableRow>
+          )
+        )}
       </TableBody>
     </Table>
   );

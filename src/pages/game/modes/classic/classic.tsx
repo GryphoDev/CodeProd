@@ -205,7 +205,7 @@ export function ClassicMode() {
           <AlertDescription>Press Enter Key</AlertDescription>
         </Alert>
       )}
-      {!isStarted && (
+      {!isStarted && !isFinish && (
         <span>Once you’re ready, start typing to begin the timer.</span>
       )}
       {isFinish && (
