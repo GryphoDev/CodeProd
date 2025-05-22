@@ -8,6 +8,7 @@ import { ThemeProvider } from "./components/theme-provider";
 import { Game } from "./pages/game/game";
 import { useStore } from "./store/dataStore";
 import { LangProvider } from "./components/language-provider";
+import { Analytics } from "@vercel/analytics/react";
 
 function App() {
   const fetchAllLanguages = useStore((state) => state.fetchAllLanguages);
@@ -30,6 +31,7 @@ function App() {
           </Routes>
           <Footer />
         </Router>
+        <Analytics />
       </ThemeProvider>
     </LangProvider>
   );
