@@ -12,8 +12,11 @@ import { useGameStore } from "@/store/gameStore";
 import { CodeSnippetDisplay } from "@/utils/codeDisplay";
 import { Terminal } from "lucide-react";
 import { useEffect, useMemo, useRef } from "react";
+import { useTranslation } from "@/utils/useTranslation";
+import { AccuracyMessage } from "@/components/accuracyMessage/accuracyMessage";
 
 export function TimeAttackMode() {
+  const { t } = useTranslation();
   const {
     snippets,
     snippetIndex,
@@ -26,8 +29,6 @@ export function TimeAttackMode() {
     error,
     isStarted,
     isFinish,
-    accuracy,
-    realAccuracy,
     resetGame,
     nextSnippet,
     setTimeStart,
@@ -269,7 +270,7 @@ export function TimeAttackMode() {
       {error && (
         <Alert className="w-fit bg-destructive/70">
           <Terminal className="h-4 w-4" />
-          <AlertDescription>Press Enter Key</AlertDescription>
+          <AlertDescription>{t.game.alertEnterKey}</AlertDescription>
         </Alert>
       )}
       <span>
@@ -278,32 +279,8 @@ export function TimeAttackMode() {
           .padStart(2, "0")}
         :{(timeLeft % 60).toString().padStart(2, "0")}
       </span>
-      {!isStarted && !isFinish && (
-        <span>Once you’re ready, start typing to begin the timer.</span>
-      )}
-      {isFinish && (
-        <div className="flex flex-col text-center">
-          <span className="font-bold">{`Accuracy : ${accuracy}%, Real Accuracy : ${realAccuracy}%`}</span>
-          {accuracy === 100 && accuracy - realAccuracy !== 0 && (
-            <span className="text-sm">{`You typed all the characters correctly, but some mistakes were made, resulting in a ${
-              accuracy - realAccuracy
-            }% difference`}</span>
-          )}
-          {accuracy < 100 && accuracy - realAccuracy !== 0 && (
-            <span className="text-sm">
-              {`You missed a few characters, and even after fixing the mistakes,
-          there’s still a ${accuracy - realAccuracy}% difference due to the
-          errors.`}
-            </span>
-          )}
-          {accuracy < 100 && accuracy === realAccuracy && (
-            <span>{`You made a few mistakes, but your real accuracy matches your overall accuracy of ${accuracy}%`}</span>
-          )}
-          {accuracy === 100 && realAccuracy === 100 && (
-            <span className="text-sm">{`Nice job, you nailed it with zero mistakes!`}</span>
-          )}
-        </div>
-      )}
+      {!isStarted && !isFinish && <span>{t.game.startMessage}</span>}
+      {isFinish && <AccuracyMessage />}
       <div className="flex gap-2">
         <Button
           children="Restart"

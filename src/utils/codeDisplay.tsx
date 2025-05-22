@@ -8,7 +8,7 @@ export function CodeSnippetDisplay({
   userInput,
 }: CodeSnippetDisplayProps) {
   return (
-    <pre>
+    <pre className=" max-w-2xl">
       <code className="whitespace-pre-wrap break-words font-mono text-base">
         {snippet.split("").map((char, i) => {
           const typedChar = userInput[i];

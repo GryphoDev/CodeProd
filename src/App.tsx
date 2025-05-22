@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { ThemeProvider } from "./components/theme-provider";
 import { Game } from "./pages/game/game";
 import { useStore } from "./store/dataStore";
+import { LangProvider } from "./components/language-provider";
 
 function App() {
   const fetchAllLanguages = useStore((state) => state.fetchAllLanguages);
@@ -18,17 +19,19 @@ function App() {
   }, [fetchAllSnippets, fetchAllLanguages]);
 
   return (
-    <ThemeProvider>
-      <Router>
-        <Header />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/game" element={<Game />} />
-          <Route path="*" element={<Error />} />
-        </Routes>
-        <Footer />
-      </Router>
-    </ThemeProvider>
+    <LangProvider>
+      <ThemeProvider>
+        <Router>
+          <Header />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/game" element={<Game />} />
+            <Route path="*" element={<Error />} />
+          </Routes>
+          <Footer />
+        </Router>
+      </ThemeProvider>
+    </LangProvider>
   );
 }
 

@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/table";
 import { useGameSettingsStore } from "@/store/gameSettingsStore";
 import { useEffect, useState } from "react";
+import { useTranslation } from "@/utils/useTranslation";
 
 type Scores = {
   cpm: number;
@@ -22,6 +23,7 @@ type Scores = {
 };
 
 export function ScoringBoard() {
+  const { t } = useTranslation();
   const [scores, setScores] = useState<Scores[]>([]);
   const { gameMode } = useGameSettingsStore();
 
@@ -42,22 +44,28 @@ export function ScoringBoard() {
 
   return (
     <Table className="w-full">
-      <TableCaption>Yours best scores</TableCaption>
+      <TableCaption>{t.scoringBoard.caption}</TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead className="font-bold">Language</TableHead>
+          <TableHead className="font-bold">{t.scoringBoard.language}</TableHead>
           {gameMode !== "timeAttack" && gameMode !== "survival" && (
-            <TableHead className="font-bold text-center">Length</TableHead>
+            <TableHead className="font-bold text-center">
+              {t.scoringBoard.length}
+            </TableHead>
           )}
           <TableHead className="font-bold text-center">Date</TableHead>
           <TableHead className="font-bold text-center">CPM</TableHead>
-          <TableHead className="font-bold text-center">Real Accuracy</TableHead>
+          <TableHead className="font-bold text-center">
+            {t.scoringBoard.realAccuracy}
+          </TableHead>
           {gameMode === "survival" && (
             <TableHead className="font-bold text-center">
-              Max Mistakes
+              {t.scoringBoard.maxMistakes}
             </TableHead>
           )}
-          <TableHead className="text-right font-bold">Total Time</TableHead>
+          <TableHead className="text-right font-bold">
+            {t.scoringBoard.totalTime}
+          </TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>

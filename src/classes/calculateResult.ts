@@ -76,11 +76,10 @@ export class CalculateResult {
   saveResults() {
     if (this.hasSave) return;
     this.hasSave = true;
-    console.log("saveResults");
     const newResult = {
       snippet: this.gs.snippets[this.gs.snippetIndex]?.language,
       length: this.gs.snippets[this.gs.snippetIndex]?.code.length,
-      date: format(new Date(), "EEEE d MMMM yyyy, HH:mm:ss"),
+      date: format(new Date(), "dd/MM/yyyy, HH:mm"),
       cpm: this.userCpm,
       realAccuracy: this.realAccuracy,
       time: this.formattedTime,

@@ -1,3 +1,4 @@
+import { LangToggle } from "@/components/lang-toggles";
 import { ModeToggle } from "@/components/mode-toggle";
 import { useGameStore } from "@/store/gameStore";
 import { ArrowLeft } from "lucide-react";
@@ -10,7 +11,7 @@ export function Header() {
   return (
     <header className="py-4 px-2 border-b-[1px] flex justify-between items-center">
       <div className="flex items-center gap-4">
-        {location.pathname === "/game" && (
+        {location.pathname !== "/" && (
           <Link to="/">
             <ArrowLeft onClick={resetGame} className="cursor-pointer" />
           </Link>
@@ -22,7 +23,10 @@ export function Header() {
         />
         <h1 className="font-bold">CODEPROD</h1>
       </div>
-      <ModeToggle />
+      <div className="flex gap-2">
+        <LangToggle />
+        <ModeToggle />
+      </div>
     </header>
   );
 }

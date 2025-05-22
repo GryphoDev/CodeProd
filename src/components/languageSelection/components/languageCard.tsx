@@ -9,7 +9,7 @@ export function LanguageCard({ lang }: { lang: string }) {
   const handleCheckBox = useHandleCheckBox();
 
   return (
-    <Card key={lang} className="w-60 justify-between">
+    <Card key={lang} className="w-60 justify-between py-4">
       <CardHeader>
         <div className="flex justify-between items-center gap-5">
           <CardTitle>{lang}</CardTitle>

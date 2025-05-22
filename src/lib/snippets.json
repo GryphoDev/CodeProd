@@ -1,0 +1,650 @@
+[
+  {
+    "_id": "67ee8d3dd64a48e692a4328c",
+    "language": "JavaScript",
+    "code": "function reverseString(str) { return str.split('').reverse().join(''); }",
+    "difficulty": "easy"
+  },
+  {
+    "_id": "67ee8d53d64a48e692a4328e",
+    "language": "JavaScript",
+    "code": "function findMax(arr) { return Math.max(...arr); }",
+    "difficulty": "easy"
+  },
+  {
+    "_id": "67ee8d5bd64a48e692a43290",
+    "language": "JavaScript",
+    "code": "function isEven(n) { return n % 2 === 0 ? 'Pair' : 'Impair'; }",
+    "difficulty": "easy"
+  },
+  {
+    "_id": "67ee8d63d64a48e692a43292",
+    "language": "JavaScript",
+    "code": "function removeDuplicates(arr) { return [...new Set(arr)]; }",
+    "difficulty": "medium"
+  },
+  {
+    "_id": "67ee8d69d64a48e692a43294",
+    "language": "JavaScript",
+    "code": "function countVowels(str) { return (str.match(/[aeiou]/gi) || []).length; }",
+    "difficulty": "medium"
+  },
+  {
+    "_id": "67ee8d70d64a48e692a43296",
+    "language": "JavaScript",
+    "code": "function getRandom(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }",
+    "difficulty": "medium"
+  },
+  {
+    "_id": "67ee8d79d64a48e692a43298",
+    "language": "JavaScript",
+    "code": "function isPalindrome(str) { const cleanStr = str.toLowerCase().replace(/[^a-z0-9]/g, ''); return cleanStr === cleanStr.split('').reverse().join(''); }",
+    "difficulty": "hard"
+  },
+  {
+    "_id": "67ee8d7fd64a48e692a4329a",
+    "language": "JavaScript",
+    "code": "function sortByKey(arr, key) { return arr.sort((a, b) =\u003E (a[key] \u003E b[key] ? 1 : -1)); }",
+    "difficulty": "hard"
+  },
+  {
+    "_id": "67ee8d86d64a48e692a4329c",
+    "language": "JavaScript",
+    "code": "function memoize(fn) { const cache = {}; return function (...args) { const key = JSON.stringify(args); if (!cache[key]) { cache[key] = fn(...args); } return cache[key]; }; }",
+    "difficulty": "hard"
+  },
+  {
+    "_id": "67eea063fa1571960ae894bd",
+    "language": "Python",
+    "code": "def add(a, b):\n    return a + b",
+    "difficulty": "easy"
+  },
+  {
+    "_id": "67eea06bfa1571960ae894bf",
+    "language": "Python",
+    "code": "def reverse_string(s):\n    return s[::-1]",
+    "difficulty": "easy"
+  },
+  {
+    "_id": "67eea074fa1571960ae894c1",
+    "language": "Python",
+    "code": "def factorial(n):\n    if n == 0:\n        return 1\n    else:\n        return n * factorial(n-1)",
+    "difficulty": "easy"
+  },
+  {
+    "_id": "67eea085fa1571960ae894c3",
+    "language": "Python",
+    "code": "def merge_sort(arr):\n    if len(arr) \u003E 1:\n        mid = len(arr) // 2\n        left_half = arr[:mid]\n        right_half = arr[mid:]\n\n        merge_sort(left_half)\n        merge_sort(right_half)\n\n        i = j = k = 0\n        while i \u003C len(left_half) and j \u003C len(right_half):\n            if left_half[i] \u003C right_half[j]:\n                arr[k] = left_half[i]\n                i += 1\n            else:\n                arr[k] = right_half[j]\n                j += 1\n            k += 1\n\n        while i \u003C len(left_half):\n            arr[k] = left_half[i]\n            i += 1\n            k += 1\n\n        while j \u003C len(right_half):\n            arr[k] = right_half[j]\n            j += 1\n            k += 1\n    return arr",
+    "difficulty": "medium"
+  },
+  {
+    "_id": "67eea090fa1571960ae894c5",
+    "language": "Python",
+    "code": "def fibonacci(n):\n    if n \u003C= 1:\n        return n\n    else:\n        return fibonacci(n-1) + fibonacci(n-2)",
+    "difficulty": "medium"
+  },
+  {
+    "_id": "67eea0a0fa1571960ae894c7",
+    "language": "Python",
+    "code": "def binary_search(arr, target):\n    low = 0\n    high = len(arr) - 1\n    while low \u003C= high:\n        mid = (low + high) // 2\n        if arr[mid] == target:\n            return mid\n        elif arr[mid] \u003C target:\n            low = mid + 1\n        else:\n            high = mid - 1\n    return -1",
+    "difficulty": "medium"
+  },
+  {
+    "_id": "67eea0a8fa1571960ae894c9",
+    "language": "Python",
+    "code": "def dijkstra(graph, start):\n    shortest_path = {start: 0}\n    previous_nodes = {}\n    nodes = list(graph)\n\n    while nodes:\n        min_node = None\n        for node in nodes:\n            if node in shortest_path:\n                if min_node is None:\n                    min_node = node\n                elif shortest_path[node] \u003C shortest_path[min_node]:\n                    min_node = node\n        if min_node is None:\n            break\n        nodes.remove(min_node)\n        current_weight = shortest_path[min_node]\n        for neighbor, weight in graph[min_node].items():\n            weight = current_weight + weight\n            if neighbor not in shortest_path or weight \u003C shortest_path[neighbor]:\n                shortest_path[neighbor] = weight\n                previous_nodes[neighbor] = min_node\n    return shortest_path, previous_nodes",
+    "difficulty": "hard"
+  },
+  {
+    "_id": "67eea0b0fa1571960ae894cb",
+    "language": "Python",
+    "code": "def quicksort(arr):\n    if len(arr) \u003C= 1:\n        return arr\n    pivot = arr[len(arr) // 2]\n    left = [x for x in arr if x \u003C pivot]\n    middle = [x for x in arr if x == pivot]\n    right = [x for x in arr if x \u003E pivot]\n    return quicksort(left) + middle + quicksort(right)",
+    "difficulty": "hard"
+  },
+  {
+    "_id": "67eea0b8fa1571960ae894cd",
+    "language": "Python",
+    "code": "def knapsack(weights, values, capacity):\n    n = len(weights)\n    dp = [[0] * (capacity + 1) for _ in range(n + 1)]\n    for i in range(n + 1):\n        for w in range(capacity + 1):\n            if i == 0 or w == 0:\n                dp[i][w] = 0\n            elif weights[i-1] \u003C= w:\n                dp[i][w] = max(values[i-1] + dp[i-1][w-weights[i-1]], dp[i-1][w])\n            else:\n                dp[i][w] = dp[i-1][w]\n    return dp[n][capacity]",
+    "difficulty": "hard"
+  },
+  {
+    "_id": "67eea0e2fa1571960ae894cf",
+    "language": "Java",
+    "code": "public class Main {\n    public static int add(int a, int b) {\n        return a + b;\n    }\n\n    public static void main(String[] args) {\n        System.out.println(add(5, 3));\n    }\n}",
+    "difficulty": "easy"
+  },
+  {
+    "_id": "67eea0e9fa1571960ae894d1",
+    "language": "Java",
+    "code": "public class Main {\n    public static void reverseString(String str) {\n        StringBuilder sb = new StringBuilder(str);\n        System.out.println(sb.reverse().toString());\n    }\n\n    public static void main(String[] args) {\n        reverseString(\"hello\");\n    }\n}",
+    "difficulty": "easy"
+  },
+  {
+    "_id": "67eea0f0fa1571960ae894d3",
+    "language": "Java",
+    "code": "public class Main {\n    public static int factorial(int n) {\n        if (n == 0) return 1;\n        else return n * factorial(n - 1);\n    }\n\n    public static void main(String[] args) {\n        System.out.println(factorial(5));\n    }\n}",
+    "difficulty": "easy"
+  },
+  {
+    "_id": "67eea0f6fa1571960ae894d5",
+    "language": "Java",
+    "code": "public class Main {\n    public static int[] bubbleSort(int[] arr) {\n        int n = arr.length;\n        for (int i = 0; i \u003C n - 1; i++) {\n            for (int j = 0; j \u003C n - i - 1; j++) {\n                if (arr[j] \u003E arr[j + 1]) {\n                    int temp = arr[j];\n                    arr[j] = arr[j + 1];\n                    arr[j + 1] = temp;\n                }\n            }\n        }\n        return arr;\n    }\n\n    public static void main(String[] args) {\n        int[] arr = {5, 2, 9, 1, 5, 6};\n        int[] sortedArr = bubbleSort(arr);\n        for (int num : sortedArr) {\n            System.out.print(num + \" \");\n        }\n    }\n}",
+    "difficulty": "medium"
+  },
+  {
+    "_id": "67eea0fefa1571960ae894d7",
+    "language": "Java",
+    "code": "public class Main {\n    public static int[] mergeSort(int[] arr) {\n        if (arr.length \u003C= 1) return arr;\n        int mid = arr.length / 2;\n        int[] left = Arrays.copyOfRange(arr, 0, mid);\n        int[] right = Arrays.copyOfRange(arr, mid, arr.length);\n\n        left = mergeSort(left);\n        right = mergeSort(right);\n\n        return merge(left, right);\n    }\n\n    public static int[] merge(int[] left, int[] right) {\n        int[] result = new int[left.length + right.length];\n        int i = 0, j = 0, k = 0;\n        while (i \u003C left.length && j \u003C right.length) {\n            if (left[i] \u003C right[j]) {\n                result[k++] = left[i++];\n            } else {\n                result[k++] = right[j++];\n            }\n        }\n        while (i \u003C left.length) result[k++] = left[i++];\n        while (j \u003C right.length) result[k++] = right[j++];\n        return result;\n    }\n\n    public static void main(String[] args) {\n        int[] arr = {5, 2, 9, 1, 5, 6};\n        int[] sortedArr = mergeSort(arr);\n        for (int num : sortedArr) {\n            System.out.print(num + \" \");\n        }\n    }\n}",
+    "difficulty": "medium"
+  },
+  {
+    "_id": "67eea108fa1571960ae894d9",
+    "language": "Java",
+    "code": "public class Main {\n    public static boolean isPalindrome(String str) {\n        int left = 0, right = str.length() - 1;\n        while (left \u003C right) {\n            if (str.charAt(left) != str.charAt(right)) {\n                return false;\n            }\n            left++;\n            right--;\n        }\n        return true;\n    }\n\n    public static void main(String[] args) {\n        System.out.println(isPalindrome(\"racecar\"));\n    }\n}",
+    "difficulty": "medium"
+  },
+  {
+    "_id": "67eea10ffa1571960ae894db",
+    "language": "Java",
+    "code": "public class Main {\n    public static int knapsack(int[] weights, int[] values, int capacity) {\n        int n = weights.length;\n        int[][] dp = new int[n+1][capacity+1];\n\n        for (int i = 0; i \u003C= n; i++) {\n            for (int w = 0; w \u003C= capacity; w++) {\n                if (i == 0 || w == 0) {\n                    dp[i][w] = 0;\n                } else if (weights[i-1] \u003C= w) {\n                    dp[i][w] = Math.max(values[i-1] + dp[i-1][w-weights[i-1]], dp[i-1][w]);\n                } else {\n                    dp[i][w] = dp[i-1][w];\n                }\n            }\n        }\n        return dp[n][capacity];\n    }\n\n    public static void main(String[] args) {\n        int[] weights = {1, 2, 3};\n        int[] values = {10, 20, 30};\n        int capacity = 4;\n        System.out.println(knapsack(weights, values, capacity));\n    }\n}",
+    "difficulty": "hard"
+  },
+  {
+    "_id": "67eea116fa1571960ae894dd",
+    "language": "Java",
+    "code": "public class Main {\n    public static void quicksort(int[] arr, int low, int high) {\n        if (low \u003C high) {\n            int pivot = partition(arr, low, high);\n            quicksort(arr, low, pivot - 1);\n            quicksort(arr, pivot + 1, high);\n        }\n    }\n\n    private static int partition(int[] arr, int low, int high) {\n        int pivot = arr[high];\n        int i = (low - 1);\n        for (int j = low; j \u003C high; j++) {\n            if (arr[j] \u003C pivot) {\n                i++;\n                int temp = arr[i];\n                arr[i] = arr[j];\n                arr[j] = temp;\n            }\n        }\n        int temp = arr[i + 1];\n        arr[i + 1] = arr[high];\n        arr[high] = temp;\n        return i + 1;\n    }\n\n    public static void main(String[] args) {\n        int[] arr = {10, 7, 8, 9, 1, 5};\n        quicksort(arr, 0, arr.length - 1);\n        for (int num : arr) {\n            System.out.print(num + \" \");\n        }\n    }\n}",
+    "difficulty": "hard"
+  },
+  {
+    "_id": "67eea11ffa1571960ae894df",
+    "language": "Java",
+    "code": "public class Main {\n    public static void generateCombinations(String str, String prefix, int index) {\n        if (index == str.length()) {\n            System.out.println(prefix);\n            return;\n        }\n        generateCombinations(str, prefix + str.charAt(index), index + 1);\n        generateCombinations(str, prefix, index + 1);\n    }\n\n    public static void main(String[] args) {\n        generateCombinations(\"abc\", \"\", 0);\n    }\n}",
+    "difficulty": "hard"
+  },
+  {
+    "_id": "67eeb244fa1571960ae8b2d5",
+    "language": "C++",
+    "code": "#include \u003Ciostream\u003E\nusing namespace std;\n\nint main() {\n    cout \u003C\u003C \"Hello, World!\" \u003C\u003C endl;\n    return 0;\n}",
+    "difficulty": "easy"
+  },
+  {
+    "_id": "67eeb24cfa1571960ae8b2d7",
+    "language": "C++",
+    "code": "#include \u003Ciostream\u003E\nusing namespace std;\n\nint main() {\n    int a = 5, b = 3;\n    cout \u003C\u003C \"Sum: \" \u003C\u003C a + b \u003C\u003C endl;\n    return 0;\n}",
+    "difficulty": "easy"
+  },
+  {
+    "_id": "67eeb253fa1571960ae8b2d9",
+    "language": "C++",
+    "code": "#include \u003Ciostream\u003E\nusing namespace std;\n\nint main() {\n    int n = 5;\n    for (int i = 1; i \u003C= n; i++) {\n        cout \u003C\u003C i \u003C\u003C \" \";\n    }\n    cout \u003C\u003C endl;\n    return 0;\n}",
+    "difficulty": "easy"
+  },
+  {
+    "_id": "67eeb25cfa1571960ae8b2db",
+    "language": "C++",
+    "code": "#include \u003Ciostream\u003E\nusing namespace std;\n\nint factorial(int n) {\n    if (n == 0) return 1;\n    return n * factorial(n - 1);\n}\n\nint main() {\n    int n = 5;\n    cout \u003C\u003C \"Factorial of \" \u003C\u003C n \u003C\u003C \" is \" \u003C\u003C factorial(n) \u003C\u003C endl;\n    return 0;\n}",
+    "difficulty": "medium"
+  },
+  {
+    "_id": "67eeb263fa1571960ae8b2dd",
+    "language": "C++",
+    "code": "#include \u003Ciostream\u003E\n#include \u003Cvector\u003E\nusing namespace std;\n\nint main() {\n    vector\u003Cint\u003E arr = {1, 2, 3, 4, 5};\n    for (int i : arr) {\n        cout \u003C\u003C i \u003C\u003C \" \";\n    }\n    cout \u003C\u003C endl;\n    return 0;\n}",
+    "difficulty": "medium"
+  },
+  {
+    "_id": "67eeb26afa1571960ae8b2df",
+    "language": "C++",
+    "code": "#include \u003Ciostream\u003E\nusing namespace std;\n\nint main() {\n    int a = 10, b = 20;\n    if (a \u003E b) {\n        cout \u003C\u003C \"A is greater than B\" \u003C\u003C endl;\n    } else {\n        cout \u003C\u003C \"B is greater than A\" \u003C\u003C endl;\n    }\n    return 0;\n}",
+    "difficulty": "medium"
+  },
+  {
+    "_id": "67eeb272fa1571960ae8b2e1",
+    "language": "C++",
+    "code": "#include \u003Ciostream\u003E\n#include \u003Cvector\u003E\nusing namespace std;\n\nvoid mergeSort(vector\u003Cint\u003E& arr, int left, int right) {\n    if (left \u003C right) {\n        int mid = left + (right - left) / 2;\n        mergeSort(arr, left, mid);\n        mergeSort(arr, mid + 1, right);\n        // Merge logic here\n    }\n}\n\nint main() {\n    vector\u003Cint\u003E arr = {12, 11, 13, 5, 6, 7};\n    mergeSort(arr, 0, arr.size() - 1);\n    return 0;\n}",
+    "difficulty": "hard"
+  },
+  {
+    "_id": "67eeb279fa1571960ae8b2e3",
+    "language": "C++",
+    "code": "#include \u003Ciostream\u003E\n#include \u003Cstring\u003E\nusing namespace std;\n\nbool isPalindrome(string str) {\n    int left = 0, right = str.length() - 1;\n    while (left \u003C right) {\n        if (str[left] != str[right]) return false;\n        left++, right--;\n    }\n    return true;\n}\n\nint main() {\n    string str = \"racecar\";\n    cout \u003C\u003C (isPalindrome(str) ? \"Palindrome\" : \"Not a palindrome\") \u003C\u003C endl;\n    return 0;\n}",
+    "difficulty": "hard"
+  },
+  {
+    "_id": "67eeb280fa1571960ae8b2e5",
+    "language": "C++",
+    "code": "#include \u003Ciostream\u003E\n#include \u003Cvector\u003E\nusing namespace std;\n\nint knapSack(int W, vector\u003Cint\u003E& wt, vector\u003Cint\u003E& val, int n) {\n    if (n == 0 || W == 0) return 0;\n    if (wt[n - 1] \u003E W) return knapSack(W, wt, val, n - 1);\n    return max(val[n - 1] + knapSack(W - wt[n - 1], wt, val, n - 1), knapSack(W, wt, val, n - 1));\n}\n\nint main() {\n    vector\u003Cint\u003E val = {60, 100, 120};\n    vector\u003Cint\u003E wt = {10, 20, 30};\n    int W = 50;\n    int n = val.size();\n    cout \u003C\u003C \"Max value: \" \u003C\u003C knapSack(W, wt, val, n) \u003C\u003C endl;\n    return 0;\n}",
+    "difficulty": "hard"
+  },
+  {
+    "_id": "67eff9a4ae8438062ff787ca",
+    "language": "TypeScript",
+    "code": "console.log(\"Hello, World!\");",
+    "difficulty": "easy"
+  },
+  {
+    "_id": "67eff9adae8438062ff787cc",
+    "language": "TypeScript",
+    "code": "function add(a: number, b: number): number {\n    return a + b;\n}\nconsole.log(add(5, 3));",
+    "difficulty": "easy"
+  },
+  {
+    "_id": "67eff9b4ae8438062ff787ce",
+    "language": "TypeScript",
+    "code": "function isEven(n: number): boolean {\n    return n % 2 === 0;\n}\nconsole.log(isEven(4));",
+    "difficulty": "easy"
+  },
+  {
+    "_id": "67eff9bcae8438062ff787d0",
+    "language": "TypeScript",
+    "code": "class Person {\n    name: string;\n    constructor(name: string) {\n        this.name = name;\n    }\n    greet(): void {\n        console.log(`Hello, my name is ${this.name}`);\n    }\n}\nconst user = new Person(\"Alice\");\nuser.greet();",
+    "difficulty": "medium"
+  },
+  {
+    "_id": "67eff9c4ae8438062ff787d2",
+    "language": "TypeScript",
+    "code": "function delay(ms: number): Promise\u003Cstring\u003E {\n    return new Promise(resolve =\u003E setTimeout(() =\u003E resolve(\"Done!\"), ms));\n}\nasync function execute() {\n    console.log(await delay(1000));\n}\nexecute();",
+    "difficulty": "medium"
+  },
+  {
+    "_id": "67eff9ccae8438062ff787d4",
+    "language": "TypeScript",
+    "code": "const numbers: number[] = [1, 2, 3, 4, 5, 6];\nconst evenNumbers = numbers.filter(n =\u003E n % 2 === 0);\nconsole.log(evenNumbers);",
+    "difficulty": "medium"
+  },
+  {
+    "_id": "67eff9d3ae8438062ff787d6",
+    "language": "TypeScript",
+    "code": "type TreeNode = {\n    value: number;\n    left?: TreeNode;\n    right?: TreeNode;\n};\n\nfunction inOrderTraversal(node?: TreeNode): void {\n    if (!node) return;\n    inOrderTraversal(node.left);\n    console.log(node.value);\n    inOrderTraversal(node.right);\n}",
+    "difficulty": "hard"
+  },
+  {
+    "_id": "67eff9dbae8438062ff787d8",
+    "language": "TypeScript",
+    "code": "function memoize\u003CT extends (...args: any[]) =\u003E any\u003E(fn: T): T {\n    const cache = new Map\u003Cstring, ReturnType\u003CT\u003E\u003E();\n    return function (...args: any[]): any {\n        const key = JSON.stringify(args);\n        if (!cache.has(key)) {\n            cache.set(key, fn(...args));\n        }\n        return cache.get(key);\n    } as T;\n}\nconst add = (a: number, b: number) =\u003E a + b;\nconst memoizedAdd = memoize(add);\nconsole.log(memoizedAdd(2, 3));",
+    "difficulty": "hard"
+  },
+  {
+    "_id": "67eff9e3ae8438062ff787da",
+    "language": "TypeScript",
+    "code": "async function fetchData(url: string): Promise\u003Cany\u003E {\n    try {\n        const response = await fetch(url);\n        if (!response.ok) {\n            throw new Error(\"Network response was not ok\");\n        }\n        return await response.json();\n    } catch (error) {\n        console.error(\"Fetching error:\", error);\n        return null;\n    }\n}\nfetchData(\"https://api.example.com/data\").then(data =\u003E console.log(data));",
+    "difficulty": "hard"
+  },
+  {
+    "_id": "67effa09ae8438062ff787e0",
+    "language": "C#",
+    "code": "using System;\n\nclass Program {\n    static void Main() {\n        Console.WriteLine(\"Hello, World!\");\n    }\n}",
+    "difficulty": "easy"
+  },
+  {
+    "_id": "67effa10ae8438062ff787e2",
+    "language": "C#",
+    "code": "int Add(int a, int b) {\n    return a + b;\n}\nConsole.WriteLine(Add(5, 3));",
+    "difficulty": "easy"
+  },
+  {
+    "_id": "67effa16ae8438062ff787e4",
+    "language": "C#",
+    "code": "bool IsEven(int n) {\n    return n % 2 == 0;\n}\nConsole.WriteLine(IsEven(4));",
+    "difficulty": "easy"
+  },
+  {
+    "_id": "67effa20ae8438062ff787e6",
+    "language": "C#",
+    "code": "class Person {\n    public string Name { get; set; }\n    public Person(string name) {\n        Name = name;\n    }\n    public void Greet() {\n        Console.WriteLine($\"Hello, my name is {Name}\");\n    }\n}\nPerson user = new Person(\"Alice\");\nuser.Greet();",
+    "difficulty": "medium"
+  },
+  {
+    "_id": "67effa26ae8438062ff787e8",
+    "language": "C#",
+    "code": "async Task DelayAsync(int milliseconds) {\n    await Task.Delay(milliseconds);\n    Console.WriteLine(\"Done!\");\n}\nawait DelayAsync(1000);",
+    "difficulty": "medium"
+  },
+  {
+    "_id": "67effa2dae8438062ff787ea",
+    "language": "C#",
+    "code": "int[] numbers = {1, 2, 3, 4, 5, 6};\nvar evenNumbers = numbers.Where(n =\u003E n % 2 == 0);\nConsole.WriteLine(string.Join(\", \", evenNumbers));",
+    "difficulty": "medium"
+  },
+  {
+    "_id": "67effa35ae8438062ff787ec",
+    "language": "C#",
+    "code": "class TreeNode {\n    public int Value;\n    public TreeNode Left, Right;\n    public TreeNode(int value) {\n        Value = value;\n    }\n}\nvoid InOrderTraversal(TreeNode node) {\n    if (node == null) return;\n    InOrderTraversal(node.Left);\n    Console.WriteLine(node.Value);\n    InOrderTraversal(node.Right);\n}",
+    "difficulty": "hard"
+  },
+  {
+    "_id": "67effa3cae8438062ff787ee",
+    "language": "C#",
+    "code": "Func\u003Cint, int, int\u003E add = (a, b) =\u003E a + b;\nConsole.WriteLine(add(2, 3));\n\nvar memoizedAdd = new Dictionary\u003C(int, int), int\u003E();\nint MemoizedFunction(int x, int y) {\n    var key = (x, y);\n    if (!memoizedAdd.ContainsKey(key)) {\n        memoizedAdd[key] = add(x, y);\n    }\n    return memoizedAdd[key];\n}\nConsole.WriteLine(MemoizedFunction(2, 3));",
+    "difficulty": "hard"
+  },
+  {
+    "_id": "67effa44ae8438062ff787f0",
+    "language": "C#",
+    "code": "using System.Net.Http;\nusing System.Threading.Tasks;\n\nasync Task FetchDataAsync(string url) {\n    using HttpClient client = new HttpClient();\n    try {\n        string result = await client.GetStringAsync(url);\n        Console.WriteLine(result);\n    } catch (Exception ex) {\n        Console.WriteLine(\"Error: \" + ex.Message);\n    }\n}\nawait FetchDataAsync(\"https://api.example.com/data\");",
+    "difficulty": "hard"
+  },
+  {
+    "_id": "67effa64ae8438062ff787f2",
+    "language": "Go",
+    "code": "package main\nimport \"fmt\"\n\nfunc main() {\n    fmt.Println(\"Hello, World!\")\n}",
+    "difficulty": "easy"
+  },
+  {
+    "_id": "67effa6aae8438062ff787f4",
+    "language": "Go",
+    "code": "package main\nimport \"fmt\"\n\nfunc add(a int, b int) int {\n    return a + b\n}\n\nfunc main() {\n    fmt.Println(add(5, 3))\n}",
+    "difficulty": "easy"
+  },
+  {
+    "_id": "67effa71ae8438062ff787f6",
+    "language": "Go",
+    "code": "package main\nimport \"fmt\"\n\nfunc isEven(n int) bool {\n    return n%2 == 0\n}\n\nfunc main() {\n    fmt.Println(isEven(4))\n}",
+    "difficulty": "easy"
+  },
+  {
+    "_id": "67effa7aae8438062ff787f8",
+    "language": "Go",
+    "code": "package main\nimport \"fmt\"\n\ntype Person struct {\n    Name string\n}\n\nfunc (p Person) Greet() {\n    fmt.Println(\"Hello, my name is\", p.Name)\n}\n\nfunc main() {\n    user := Person{Name: \"Alice\"}\n    user.Greet()\n}",
+    "difficulty": "medium"
+  },
+  {
+    "_id": "67effa81ae8438062ff787fa",
+    "language": "Go",
+    "code": "package main\nimport (\n    \"fmt\"\n    \"time\"\n)\n\nfunc delay(seconds int) {\n    time.Sleep(time.Duration(seconds) * time.Second)\n    fmt.Println(\"Done!\")\n}\n\nfunc main() {\n    delay(1)\n}",
+    "difficulty": "medium"
+  },
+  {
+    "_id": "67effa88ae8438062ff787fc",
+    "language": "Go",
+    "code": "package main\nimport \"fmt\"\n\nfunc filterEven(numbers []int) []int {\n    var result []int\n    for _, num := range numbers {\n        if num%2 == 0 {\n            result = append(result, num)\n        }\n    }\n    return result\n}\n\nfunc main() {\n    nums := []int{1, 2, 3, 4, 5, 6}\n    fmt.Println(filterEven(nums))\n}",
+    "difficulty": "medium"
+  },
+  {
+    "_id": "67effa90ae8438062ff787fe",
+    "language": "Go",
+    "code": "package main\nimport \"fmt\"\n\ntype TreeNode struct {\n    Value int\n    Left, Right *TreeNode\n}\n\nfunc InOrderTraversal(node *TreeNode) {\n    if node == nil {\n        return\n    }\n    InOrderTraversal(node.Left)\n    fmt.Println(node.Value)\n    InOrderTraversal(node.Right)\n}",
+    "difficulty": "hard"
+  },
+  {
+    "_id": "67effa96ae8438062ff78800",
+    "language": "Go",
+    "code": "package main\nimport \"fmt\"\n\nfunc memoize(f func(int, int) int) func(int, int) int {\n    cache := make(map[[2]int]int)\n    return func(x, y int) int {\n        key := [2]int{x, y}\n        if val, exists := cache[key]; exists {\n            return val\n        }\n        cache[key] = f(x, y)\n        return cache[key]\n    }\n}\n\nfunc add(x, y int) int {\n    return x + y\n}\n\nfunc main() {\n    memoizedAdd := memoize(add)\n    fmt.Println(memoizedAdd(2, 3))\n}",
+    "difficulty": "hard"
+  },
+  {
+    "_id": "67effa9cae8438062ff78802",
+    "language": "Go",
+    "code": "package main\nimport (\n    \"fmt\"\n    \"net/http\"\n    \"io/ioutil\"\n)\n\nfunc fetchData(url string) {\n    resp, err := http.Get(url)\n    if err != nil {\n        fmt.Println(\"Error:\", err)\n        return\n    }\n    defer resp.Body.Close()\n    body, _ := ioutil.ReadAll(resp.Body)\n    fmt.Println(string(body))\n}\n\nfunc main() {\n    fetchData(\"https://api.example.com/data\")\n}",
+    "difficulty": "hard"
+  },
+  {
+    "_id": "67effab5ae8438062ff78804",
+    "language": "Rust",
+    "code": "fn main() {\n    println!(\"Hello, World!\");\n}",
+    "difficulty": "easy"
+  },
+  {
+    "_id": "67effabcae8438062ff78806",
+    "language": "Rust",
+    "code": "fn add(a: i32, b: i32) -\u003E i32 {\n    a + b\n}\n\nfn main() {\n    println!(\"{}\", add(5, 3));\n}",
+    "difficulty": "easy"
+  },
+  {
+    "_id": "67effac2ae8438062ff78808",
+    "language": "Rust",
+    "code": "fn is_even(n: i32) -\u003E bool {\n    n % 2 == 0\n}\n\nfn main() {\n    println!(\"{}\", is_even(4));\n}",
+    "difficulty": "easy"
+  },
+  {
+    "_id": "67effacaae8438062ff7880a",
+    "language": "Rust",
+    "code": "struct Person {\n    name: String,\n}\n\nimpl Person {\n    fn greet(&self) {\n        println!(\"Hello, my name is {}\", self.name);\n    }\n}\n\nfn main() {\n    let user = Person { name: String::from(\"Alice\") };\n    user.greet();\n}",
+    "difficulty": "medium"
+  },
+  {
+    "_id": "67effad0ae8438062ff7880c",
+    "language": "Rust",
+    "code": "use std::{thread, time};\n\nfn delay(seconds: u64) {\n    let duration = time::Duration::from_secs(seconds);\n    thread::sleep(duration);\n    println!(\"Done!\");\n}\n\nfn main() {\n    delay(1);\n}",
+    "difficulty": "medium"
+  },
+  {
+    "_id": "67effad7ae8438062ff7880e",
+    "language": "Rust",
+    "code": "fn filter_even(numbers: Vec\u003Ci32\u003E) -\u003E Vec\u003Ci32\u003E {\n    numbers.into_iter().filter(|&n| n % 2 == 0).collect()\n}\n\nfn main() {\n    let nums = vec![1, 2, 3, 4, 5, 6];\n    println!(\"{:?}\", filter_even(nums));\n}",
+    "difficulty": "medium"
+  },
+  {
+    "_id": "67effadeae8438062ff78810",
+    "language": "Rust",
+    "code": "struct TreeNode {\n    value: i32,\n    left: Option\u003CBox\u003CTreeNode\u003E\u003E,\n    right: Option\u003CBox\u003CTreeNode\u003E\u003E,\n}\n\nfn in_order_traversal(node: &Option\u003CBox\u003CTreeNode\u003E\u003E) {\n    if let Some(n) = node {\n        in_order_traversal(&n.left);\n        println!(\"{}\", n.value);\n        in_order_traversal(&n.right);\n    }\n}",
+    "difficulty": "hard"
+  },
+  {
+    "_id": "67effae5ae8438062ff78812",
+    "language": "Rust",
+    "code": "use std::collections::HashMap;\n\ntype Memo = HashMap\u003C(i32, i32), i32\u003E;\n\nfn memoized_add(x: i32, y: i32, memo: &mut Memo) -\u003E i32 {\n    if let Some(&result) = memo.get(&(x, y)) {\n        return result;\n    }\n    let result = x + y;\n    memo.insert((x, y), result);\n    result\n}\n\nfn main() {\n    let mut memo = HashMap::new();\n    println!(\"{}\", memoized_add(2, 3, &mut memo));\n}",
+    "difficulty": "hard"
+  },
+  {
+    "_id": "67effaebae8438062ff78814",
+    "language": "Rust",
+    "code": "use reqwest;\nuse tokio;\n\n#[tokio::main]\nasync fn fetch_data(url: &str) -\u003E Result\u003CString, reqwest::Error\u003E {\n    let response = reqwest::get(url).await?.text().await?;\n    Ok(response)\n}\n\nfn main() {\n    match fetch_data(\"https://api.example.com/data\").await {\n        Ok(data) =\u003E println!(\"{}\", data),\n        Err(e) =\u003E println!(\"Error: {}\", e),\n    }\n}",
+    "difficulty": "hard"
+  },
+  {
+    "_id": "67effb04ae8438062ff78816",
+    "language": "Swift",
+    "code": "print(\"Hello, World!\")",
+    "difficulty": "easy"
+  },
+  {
+    "_id": "67effb0bae8438062ff78818",
+    "language": "Swift",
+    "code": "func add(a: Int, b: Int) -\u003E Int {\n    return a + b\n}\n\nprint(add(a: 5, b: 3))",
+    "difficulty": "easy"
+  },
+  {
+    "_id": "67effb12ae8438062ff7881a",
+    "language": "Swift",
+    "code": "func isEven(_ num: Int) -\u003E Bool {\n    return num % 2 == 0\n}\n\nprint(isEven(4))",
+    "difficulty": "easy"
+  },
+  {
+    "_id": "67effb19ae8438062ff7881c",
+    "language": "Swift",
+    "code": "struct Person {\n    var name: String\n    func greet() {\n        print(\"Hello, my name is \\(name)\")\n    }\n}\n\nlet user = Person(name: \"Alice\")\nuser.greet()",
+    "difficulty": "medium"
+  },
+  {
+    "_id": "67effb20ae8438062ff7881e",
+    "language": "Swift",
+    "code": "func filterEvenNumbers(from numbers: [Int]) -\u003E [Int] {\n    return numbers.filter { $0 % 2 == 0 }\n}\n\nprint(filterEvenNumbers(from: [1, 2, 3, 4, 5, 6]))",
+    "difficulty": "medium"
+  },
+  {
+    "_id": "67effb27ae8438062ff78820",
+    "language": "Swift",
+    "code": "import Foundation\n\ndispatchQueue.global().async {\n    sleep(2)\n    print(\"Async operation finished!\")\n}\nprint(\"Waiting...\")",
+    "difficulty": "medium"
+  },
+  {
+    "_id": "67effb2fae8438062ff78822",
+    "language": "Swift",
+    "code": "class TreeNode {\n    var value: Int\n    var left: TreeNode?\n    var right: TreeNode?\n    \n    init(_ value: Int) {\n        self.value = value\n    }\n}\n\nfunc inOrderTraversal(_ node: TreeNode?) {\n    guard let node = node else { return }\n    inOrderTraversal(node.left)\n    print(node.value)\n    inOrderTraversal(node.right)\n}",
+    "difficulty": "hard"
+  },
+  {
+    "_id": "67effb35ae8438062ff78824",
+    "language": "Swift",
+    "code": "import Foundation\n\nfunc fetchAPIData(from url: String, completion: @escaping (String?) -\u003E Void) {\n    guard let url = URL(string: url) else {\n        completion(nil)\n        return\n    }\n    \n    URLSession.shared.dataTask(with: url) { data, _, _ in\n        completion(data.flatMap { String(data: $0, encoding: .utf8) })\n    }.resume()\n}\n\nfetchAPIData(from: \"https://api.example.com/data\") { result in\n    print(result ?? \"Error fetching data\")\n}",
+    "difficulty": "hard"
+  },
+  {
+    "_id": "67effb3cae8438062ff78826",
+    "language": "Swift",
+    "code": "func knapsack(weights: [Int], values: [Int], capacity: Int, n: Int) -\u003E Int {\n    if n == 0 || capacity == 0 { return 0 }\n    if weights[n-1] \u003E capacity {\n        return knapsack(weights: weights, values: values, capacity: capacity, n: n-1)\n    }\n    let included = values[n-1] + knapsack(weights: weights, values: values, capacity: capacity - weights[n-1], n: n-1)\n    let excluded = knapsack(weights: weights, values: values, capacity: capacity, n: n-1)\n    return max(included, excluded)\n}\n\nlet values = [60, 100, 120]\nlet weights = [10, 20, 30]\nlet capacity = 50\nlet result = knapsack(weights: weights, values: values, capacity: capacity, n: values.count)\nprint(\"Max value: \\(result)\")",
+    "difficulty": "hard"
+  },
+  {
+    "_id": "67effb5aae8438062ff78828",
+    "language": "Kotlin",
+    "code": "fun main() {\n    println(\"Hello, World!\")\n}",
+    "difficulty": "easy"
+  },
+  {
+    "_id": "67effb61ae8438062ff7882a",
+    "language": "Kotlin",
+    "code": "fun add(a: Int, b: Int): Int {\n    return a + b\n}\n\nfun main() {\n    println(add(5, 3))\n}",
+    "difficulty": "easy"
+  },
+  {
+    "_id": "67effb6aae8438062ff7882c",
+    "language": "Kotlin",
+    "code": "fun isEven(num: Int): Boolean {\n    return num % 2 == 0\n}\n\nfun main() {\n    println(isEven(4))\n}",
+    "difficulty": "easy"
+  },
+  {
+    "_id": "67effb72ae8438062ff7882e",
+    "language": "Kotlin",
+    "code": "data class Person(val name: String) {\n    fun greet() {\n        println(\"Hello, my name is $name\")\n    }\n}\n\nfun main() {\n    val user = Person(\"Alice\")\n    user.greet()\n}",
+    "difficulty": "medium"
+  },
+  {
+    "_id": "67effb79ae8438062ff78830",
+    "language": "Kotlin",
+    "code": "fun filterEvenNumbers(numbers: List\u003CInt\u003E): List\u003CInt\u003E {\n    return numbers.filter { it % 2 == 0 }\n}\n\nfun main() {\n    println(filterEvenNumbers(listOf(1, 2, 3, 4, 5, 6)))\n}",
+    "difficulty": "medium"
+  },
+  {
+    "_id": "67effb80ae8438062ff78832",
+    "language": "Kotlin",
+    "code": "import kotlinx.coroutines.*\n\nfun main() = runBlocking {\n    launch {\n        delay(2000)\n        println(\"Async operation finished!\")\n    }\n    println(\"Waiting...\")\n}",
+    "difficulty": "medium"
+  },
+  {
+    "_id": "67effb88ae8438062ff78834",
+    "language": "Kotlin",
+    "code": "class TreeNode(val value: Int) {\n    var left: TreeNode? = null\n    var right: TreeNode? = null\n}\n\nfun inOrderTraversal(node: TreeNode?) {\n    if (node == null) return\n    inOrderTraversal(node.left)\n    println(node.value)\n    inOrderTraversal(node.right)\n}",
+    "difficulty": "hard"
+  },
+  {
+    "_id": "67effb8eae8438062ff78836",
+    "language": "Kotlin",
+    "code": "import java.net.URL\n\nfun fetchAPIData(url: String, callback: (String?) -\u003E Unit) {\n    Thread {\n        val result = try {\n            URL(url).readText()\n        } catch (e: Exception) {\n            null\n        }\n        callback(result)\n    }.start()\n}\n\nfun main() {\n    fetchAPIData(\"https://api.example.com/data\") {\n        println(it ?: \"Error fetching data\")\n    }\n}",
+    "difficulty": "hard"
+  },
+  {
+    "_id": "67effb95ae8438062ff78838",
+    "language": "Kotlin",
+    "code": "fun knapsack(weights: IntArray, values: IntArray, capacity: Int, n: Int): Int {\n    if (n == 0 || capacity == 0) return 0\n    if (weights[n - 1] \u003E capacity) {\n        return knapsack(weights, values, capacity, n - 1)\n    }\n    val included = values[n - 1] + knapsack(weights, values, capacity - weights[n - 1], n - 1)\n    val excluded = knapsack(weights, values, capacity, n - 1)\n    return maxOf(included, excluded)\n}\n\nfun main() {\n    val values = intArrayOf(60, 100, 120)\n    val weights = intArrayOf(10, 20, 30)\n    val capacity = 50\n    val result = knapsack(weights, values, capacity, values.size)\n    println(\"Max value: $result\")\n}",
+    "difficulty": "hard"
+  },
+  {
+    "_id": "67effbafae8438062ff7883a",
+    "language": "Ruby",
+    "code": "puts 'Hello, World!'",
+    "difficulty": "easy"
+  },
+  {
+    "_id": "67effbb6ae8438062ff7883c",
+    "language": "Ruby",
+    "code": "def add(a, b)\n  a + b\nend\n\nputs add(5, 3)",
+    "difficulty": "easy"
+  },
+  {
+    "_id": "67effbbcae8438062ff7883e",
+    "language": "Ruby",
+    "code": "def is_even?(num)\n  num.even?\nend\n\nputs is_even?(4)",
+    "difficulty": "easy"
+  },
+  {
+    "_id": "67effbc5ae8438062ff78840",
+    "language": "Ruby",
+    "code": "class Person\n  def initialize(name)\n    @name = name\n  end\n\n  def greet\n    puts \"Hello, my name is #{@name}\"\n  end\nend\n\nperson = Person.new('Alice')\nperson.greet",
+    "difficulty": "medium"
+  },
+  {
+    "_id": "67effbcbae8438062ff78842",
+    "language": "Ruby",
+    "code": "numbers = [1, 2, 3, 4, 5, 6]\nfiltered = numbers.select { |num| num.even? }\nputs filtered",
+    "difficulty": "medium"
+  },
+  {
+    "_id": "67effbd3ae8438062ff78844",
+    "language": "Ruby",
+    "code": "require 'open-uri'\n\nurl = 'https://api.example.com/data'\nresponse = URI.open(url).read\nputs response",
+    "difficulty": "medium"
+  },
+  {
+    "_id": "67effbdcae8438062ff78846",
+    "language": "Ruby",
+    "code": "class TreeNode\n  attr_accessor :value, :left, :right\n\n  def initialize(value)\n    @value = value\n    @left = nil\n    @right = nil\n  end\nend\n\n# In-order traversal\ndef in_order_traversal(node)\n  return if node.nil?\n  in_order_traversal(node.left)\n  puts node.value\n  in_order_traversal(node.right)\nend",
+    "difficulty": "hard"
+  },
+  {
+    "_id": "67effbe2ae8438062ff78848",
+    "language": "Ruby",
+    "code": "def knapsack(weights, values, capacity, n)\n  return 0 if n == 0 || capacity == 0\n  return knapsack(weights, values, capacity, n - 1) if weights[n - 1] \u003E capacity\n  included = values[n - 1] + knapsack(weights, values, capacity - weights[n - 1], n - 1)\n  excluded = knapsack(weights, values, capacity, n - 1)\n  [included, excluded].max\nend\n\nweights = [10, 20, 30]\nvalues = [60, 100, 120]\ncapacity = 50\nputs knapsack(weights, values, capacity, values.length)",
+    "difficulty": "hard"
+  },
+  {
+    "_id": "67effbe9ae8438062ff7884a",
+    "language": "Ruby",
+    "code": "require 'net/http'\nrequire 'json'\n\nuri = URI('https://api.example.com/data')\nresponse = Net::HTTP.get(uri)\ndata = JSON.parse(response)\nputs data",
+    "difficulty": "hard"
+  },
+  {
+    "_id": "67effc01ae8438062ff7884c",
+    "language": "PHP",
+    "code": "\u003C?php\n  echo 'Hello, World!';\n?\u003E",
+    "difficulty": "easy"
+  },
+  {
+    "_id": "67effd70ae8438062ff7884f",
+    "language": "PHP",
+    "code": "\u003C?php $name = 'John'; echo 'Hello, ' . $name; ?\u003E",
+    "difficulty": "easy"
+  },
+  {
+    "_id": "67effd79ae8438062ff78851",
+    "language": "PHP",
+    "code": "\u003C?php echo '2 + 2 = ' . (2 + 2); ?\u003E",
+    "difficulty": "easy"
+  },
+  {
+    "_id": "67effd82ae8438062ff78853",
+    "language": "PHP",
+    "code": "\u003C?php $arr = [1, 2, 3]; foreach ($arr as $value) { echo $value; } ?\u003E",
+    "difficulty": "medium"
+  },
+  {
+    "_id": "67effd8aae8438062ff78855",
+    "language": "PHP",
+    "code": "\u003C?php function greet($name) { return 'Hello, ' . $name; } echo greet('John'); ?\u003E",
+    "difficulty": "medium"
+  },
+  {
+    "_id": "67effd90ae8438062ff78857",
+    "language": "PHP",
+    "code": "\u003C?php $arr = [1, 2, 3, 4]; echo 'Sum: ' . array_sum($arr); ?\u003E",
+    "difficulty": "medium"
+  },
+  {
+    "_id": "67effd98ae8438062ff78859",
+    "language": "PHP",
+    "code": "\u003C?php function factorial($n) { if ($n == 0) return 1; else return $n * factorial($n - 1); } echo factorial(5); ?\u003E",
+    "difficulty": "hard"
+  },
+  {
+    "_id": "67effda0ae8438062ff7885b",
+    "language": "PHP",
+    "code": "\u003C?php $conn = new mysqli('localhost', 'username', 'password', 'database'); if ($conn-\u003Econnect_error) { die('Connection failed: ' . $conn-\u003Econnect_error); } $result = $conn-\u003Equery('SELECT id, name FROM users'); while ($row = $result-\u003Efetch_assoc()) { echo 'id: ' . $row['id'] . ' - Name: ' . $row['name'] . '\u003Cbr\u003E'; } $conn-\u003Eclose(); ?\u003E",
+    "difficulty": "hard"
+  },
+  {
+    "_id": "67effda7ae8438062ff7885d",
+    "language": "PHP",
+    "code": "\u003C?php function fibonacci($n) { if ($n \u003C= 1) return $n; return fibonacci($n - 1) + fibonacci($n - 2); } echo fibonacci(10); ?\u003E",
+    "difficulty": "hard"
+  }
+]
