@@ -53,6 +53,9 @@ export class KeyboardListener {
     } else if (e.key === "'") {
       this.handleSpecialKeys("'", undefined, "+", 1);
       e.preventDefault();
+    } else if (e.key === "/") {
+      this.handleSpecialKeys("/", undefined, "+", 1);
+      e.preventDefault();
     } else if (e.key.length === 1) {
       this.handleSpecialKeys(e.key, undefined, "+", 1);
     }
